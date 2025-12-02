@@ -1,0 +1,33 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                Int        @id @default(autoincrement())
+  username          String
+  email             String     @unique
+  password          String?
+  googleId          String?    @unique
+  codeforces_handle String?
+  profilePicture    String?
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+  bookmarks         Bookmark[]
+}
+
+model Bookmark {
+  id           Int      @id @default(autoincrement())
+  problem_id   String
+  problem_name String
+  rating       Int?
+  tags         Json?
+  userId       Int
+  user         User     @relation(fields: [userId], references: [id])
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
