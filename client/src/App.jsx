@@ -1,5 +1,6 @@
-import { Routes, Route } from 'react-router-dom';
-// import { useAuth } from './context/AuthContext';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { useAuth } from './context/AuthContext';
+import { Box, CircularProgress } from '@mui/material';
 // import Navbar from './components/Navbar';
 // import Login from './pages/Login';
 // import Register from './pages/Register';
@@ -9,26 +10,25 @@ import { Routes, Route } from 'react-router-dom';
 // import Contests from './pages/Contests';
 // import Bookmarks from './pages/Bookmarks';
 // import Profile from './pages/Profile';
-// import { Box, CircularProgress } from '@mui/material';
 
-// const PrivateRoute = ({ children }) => {
-//     const { user, loading } = useAuth();
-//
-//     if (loading) {
-//         return (
-//             <Box 
-//                 display="flex" 
-//                 justifyContent="center" 
-//                 alignItems="center" 
-//                 minHeight="80vh"
-//             >
-//                 <CircularProgress />
-//             </Box>
-//         );
-//     }
-//
-//     return user ? children : <Navigate to="/login" />;
-// };
+const PrivateRoute = ({ children }) => {
+    const { user, loading } = useAuth();
+
+    if (loading) {
+        return (
+            <Box 
+                display="flex" 
+                justifyContent="center" 
+                alignItems="center" 
+                minHeight="80vh"
+            >
+                <CircularProgress />
+            </Box>
+        );
+    }
+
+    return user ? children : <Navigate to="/login" />;
+};
 
 function App() {
     return (
