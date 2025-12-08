@@ -3,6 +3,11 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const prisma = require('./config/db');
 
+// Import Routes
+const authRoutes = require('./routes/authRoutes');
+const cfRoutes = require('./routes/cfRoutes');
+const userRoutes = require('./routes/userRoutes');
+
 dotenv.config();
 
 const app = express();
@@ -29,6 +34,10 @@ checkConnection();
 app.get('/', (req, res) => {
     res.send('CP Analyzer API is running');
 });
+
+app.use('/api/auth', authRoutes);
+app.use('/api/cf', cfRoutes);
+app.use('/api/users', userRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
