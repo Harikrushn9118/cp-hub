@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from './context/AuthContext';
 import { Box, CircularProgress } from '@mui/material';
-// import Navbar from './components/Navbar';
+import Navbar from './components/Navbar';
 // import Login from './pages/Login';
 // import Register from './pages/Register';
 // import Dashboard from './pages/Dashboard';
@@ -33,7 +33,7 @@ const PrivateRoute = ({ children }) => {
 function App() {
     return (
         <div className="app">
-            {/* <Navbar /> */}
+            <Navbar />
             <div className="page-container">
                 <Routes>
                     <Route path="/" element={<div>Welcome to CP Analyzer</div>} />
