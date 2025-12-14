@@ -1,250 +1,215 @@
 import { useState, useEffect } from 'react';
-import { useAuth } from '../context/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
-import { Box, TextField, Button, Typography, Paper, Alert, Divider } from '@mui/material';
-import GoogleIcon from '@mui/icons-material/Google';
+import { useAuth } from '../context/AuthContext';
+import { 
+    Box, TextField, Button, Typography, Paper, InputAdornment, 
+    IconButton, Alert, CircularProgress, Divider 
+} from '@mui/material';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import EmailIcon from '@mui/icons-material/Email';
+import LockIcon from '@mui/icons-material/Lock';
+import PersonIcon from '@mui/icons-material/Person';
+import CodeIcon from '@mui/icons-material/Code';
 import { motion } from 'framer-motion';
 
 const Register = () => {
-    const [formData, setFormData] = useState({
-        username: '',
-        email: '',
-        password: '',
-        codeforces_handle: ''
-    });
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [cfHandle, setCfHandle] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState('');
-    const { register, loginWithGoogle } = useAuth();
+    const [loading, setLoading] = useState(false);
+    const { register, googleLogin, user } = useAuth();
     const navigate = useNavigate();
 
     useEffect(() => {
-        // Load Google Identity Services
-        const script = document.createElement('script');
-        script.src = 'https://accounts.google.com/gsi/client';
-        script.async = true;
-        script.defer = true;
-        document.body.appendChild(script);
+        if (user) {
+            navigate('/dashboard');
+        }
+    }, [user, navigate]);
 
-        script.onload = () => {
-            if (window.google) {
-                window.google.accounts.id.initialize({
-                    client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID || '',
-                    callback: handleGoogleResponse,
-                });
-            }
-        };
-
-        return () => {
-            if (document.body.contains(script)) {
-                document.body.removeChild(script);
-            }
-        };
+    // Initialize Google Sign-In
+    useEffect(() => {
+        /* global google */
+        if (window.google) {
+            google.accounts.id.initialize({
+                client_id: "YOUR_GOOGLE_CLIENT_ID", // Replace with actual Client ID
+                callback: handleGoogleResponse
+            });
+            google.accounts.id.renderButton(
+                document.getElementById("googleSignUpDiv"),
+                { theme: "filled_black", size: "large", width: "100%" }
+            );
+        }
     }, []);
 
     const handleGoogleResponse = async (response) => {
         try {
-            await loginWithGoogle(response.credential);
+            setLoading(true);
+            await googleLogin(response.credential);
             navigate('/dashboard');
         } catch (err) {
-            setError(err.response?.data?.error || 'Failed to register with Google');
+            setError(err.response?.data?.message || 'Google signup failed');
+        } finally {
+            setLoading(false);
         }
-    };
-
-    const handleGoogleLogin = () => {
-        if (window.google) {
-            window.google.accounts.id.prompt();
-        } else {
-            setError('Google Sign-In is not available. Please try again.');
-        }
-    };
-
-    const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
+        setLoading(true);
         try {
-            await register(formData.username, formData.email, formData.password, formData.codeforces_handle);
+            await register(username, email, password, cfHandle);
             navigate('/dashboard');
         } catch (err) {
-            setError(err.response?.data?.error || 'Failed to register');
+            setError(err.response?.data?.message || 'Failed to register');
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
-        <Box display="flex" justifyContent="center" alignItems="center" minHeight="80vh">
+        <Box 
+            display="flex" 
+            justifyContent="center" 
+            alignItems="center" 
+            minHeight="90vh"
+            py={4}
+        >
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
             >
-                <Paper className="glass-card" sx={{ p: 4, width: 400, maxWidth: '90vw', backgroundColor: 'rgba(30, 41, 59, 0.8)' }}>
-                    <Typography variant="h4" gutterBottom className="gradient-text" fontWeight="bold" textAlign="center">
+                <Paper 
+                    className="glass-card"
+                    sx={{ 
+                        p: 4, 
+                        width: '100%', 
+                        maxWidth: 400,
+                        backgroundColor: 'rgba(30, 41, 59, 0.8)',
+                        border: '1px solid rgba(255,255,255,0.1)'
+                    }}
+                >
+                    <Typography variant="h4" align="center" gutterBottom fontWeight="bold" className="gradient-text">
                         Create Account
                     </Typography>
+                    <Typography variant="body2" align="center" sx={{ color: '#94a3b8', mb: 3 }}>
+                        Join CP Analyzer to track your progress
+                    </Typography>
 
-                    {error && <Alert severity="error" sx={{ mb: 2, backgroundColor: 'rgba(239, 68, 68, 0.2)', color: '#ffffff' }}>{error}</Alert>}
-
-                    {/* Google Login Button */}
-                    <Button
-                        fullWidth
-                        variant="outlined"
-                        startIcon={<GoogleIcon />}
-                        onClick={handleGoogleLogin}
-                        sx={{
-                            mb: 2,
-                            py: 1.5,
-                            borderColor: 'rgba(255,255,255,0.3)',
-                            color: '#ffffff',
-                            '&:hover': {
-                                borderColor: '#4285f4',
-                                backgroundColor: 'rgba(66, 133, 244, 0.1)',
-                            }
-                        }}
-                    >
-                        Continue with Google
-                    </Button>
-
-                    <Divider sx={{ my: 2, borderColor: 'rgba(255,255,255,0.2)' }}>
-                        <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.5)', px: 2 }}>
-                            OR
-                        </Typography>
-                    </Divider>
+                    {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
 
                     <form onSubmit={handleSubmit}>
                         <TextField
                             fullWidth
-                            placeholder="Username"
-                            name="username"
+                            label="Username"
                             variant="outlined"
                             margin="normal"
-                            value={formData.username}
-                            onChange={handleChange}
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            required
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <PersonIcon sx={{ color: '#94a3b8' }} />
+                                    </InputAdornment>
+                                ),
+                            }}
                             sx={{
                                 '& .MuiOutlinedInput-root': {
-                                    backgroundColor: 'rgba(15, 23, 42, 0.6)',
-                                    color: '#ffffff',
-                                    '& fieldset': { 
-                                        borderColor: 'rgba(255,255,255,0.3)',
-                                        borderWidth: '1.5px'
-                                    },
-                                    '&:hover fieldset': { 
-                                        borderColor: 'rgba(99, 102, 241, 0.6)',
-                                    },
-                                    '&.Mui-focused fieldset': { 
-                                        borderColor: 'var(--primary-color)',
-                                        borderWidth: '2px'
-                                    },
+                                    color: '#fff',
+                                    '& fieldset': { borderColor: 'rgba(255,255,255,0.2)' },
+                                    '&:hover fieldset': { borderColor: '#6366f1' },
                                 },
-                                '& .MuiInputBase-input': {
-                                    color: '#ffffff',
-                                    '&::placeholder': {
-                                        color: 'rgba(255,255,255,0.5)',
-                                        opacity: 1
-                                    }
-                                }
+                                '& .MuiInputLabel-root': { color: '#94a3b8' },
                             }}
                         />
                         <TextField
                             fullWidth
-                            placeholder="Email"
-                            name="email"
+                            label="Email"
                             type="email"
                             variant="outlined"
                             margin="normal"
-                            value={formData.email}
-                            onChange={handleChange}
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <EmailIcon sx={{ color: '#94a3b8' }} />
+                                    </InputAdornment>
+                                ),
+                            }}
                             sx={{
                                 '& .MuiOutlinedInput-root': {
-                                    backgroundColor: 'rgba(15, 23, 42, 0.6)',
-                                    color: '#ffffff',
-                                    '& fieldset': { 
-                                        borderColor: 'rgba(255,255,255,0.3)',
-                                        borderWidth: '1.5px'
-                                    },
-                                    '&:hover fieldset': { 
-                                        borderColor: 'rgba(99, 102, 241, 0.6)',
-                                    },
-                                    '&.Mui-focused fieldset': { 
-                                        borderColor: 'var(--primary-color)',
-                                        borderWidth: '2px'
-                                    },
+                                    color: '#fff',
+                                    '& fieldset': { borderColor: 'rgba(255,255,255,0.2)' },
+                                    '&:hover fieldset': { borderColor: '#6366f1' },
                                 },
-                                '& .MuiInputBase-input': {
-                                    color: '#ffffff',
-                                    '&::placeholder': {
-                                        color: 'rgba(255,255,255,0.5)',
-                                        opacity: 1
-                                    }
-                                }
+                                '& .MuiInputLabel-root': { color: '#94a3b8' },
                             }}
                         />
                         <TextField
                             fullWidth
-                            placeholder="Password"
-                            name="password"
-                            type="password"
+                            label="Codeforces Handle (Optional)"
                             variant="outlined"
                             margin="normal"
-                            value={formData.password}
-                            onChange={handleChange}
+                            value={cfHandle}
+                            onChange={(e) => setCfHandle(e.target.value)}
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <CodeIcon sx={{ color: '#94a3b8' }} />
+                                    </InputAdornment>
+                                ),
+                            }}
                             sx={{
                                 '& .MuiOutlinedInput-root': {
-                                    backgroundColor: 'rgba(15, 23, 42, 0.6)',
-                                    color: '#ffffff',
-                                    '& fieldset': { 
-                                        borderColor: 'rgba(255,255,255,0.3)',
-                                        borderWidth: '1.5px'
-                                    },
-                                    '&:hover fieldset': { 
-                                        borderColor: 'rgba(99, 102, 241, 0.6)',
-                                    },
-                                    '&.Mui-focused fieldset': { 
-                                        borderColor: 'var(--primary-color)',
-                                        borderWidth: '2px'
-                                    },
+                                    color: '#fff',
+                                    '& fieldset': { borderColor: 'rgba(255,255,255,0.2)' },
+                                    '&:hover fieldset': { borderColor: '#6366f1' },
                                 },
-                                '& .MuiInputBase-input': {
-                                    color: '#ffffff',
-                                    '&::placeholder': {
-                                        color: 'rgba(255,255,255,0.5)',
-                                        opacity: 1
-                                    }
-                                }
+                                '& .MuiInputLabel-root': { color: '#94a3b8' },
                             }}
                         />
                         <TextField
                             fullWidth
-                            placeholder="Codeforces Handle (optional)"
-                            name="codeforces_handle"
+                            label="Password"
+                            type={showPassword ? 'text' : 'password'}
                             variant="outlined"
                             margin="normal"
-                            value={formData.codeforces_handle}
-                            onChange={handleChange}
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <LockIcon sx={{ color: '#94a3b8' }} />
+                                    </InputAdornment>
+                                ),
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            onClick={() => setShowPassword(!showPassword)}
+                                            edge="end"
+                                            sx={{ color: '#94a3b8' }}
+                                        >
+                                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                                        </IconButton>
+                                    </InputAdornment>
+                                ),
+                            }}
                             sx={{
                                 '& .MuiOutlinedInput-root': {
-                                    backgroundColor: 'rgba(15, 23, 42, 0.6)',
-                                    color: '#ffffff',
-                                    '& fieldset': { 
-                                        borderColor: 'rgba(255,255,255,0.3)',
-                                        borderWidth: '1.5px'
-                                    },
-                                    '&:hover fieldset': { 
-                                        borderColor: 'rgba(99, 102, 241, 0.6)',
-                                    },
-                                    '&.Mui-focused fieldset': { 
-                                        borderColor: 'var(--primary-color)',
-                                        borderWidth: '2px'
-                                    },
+                                    color: '#fff',
+                                    '& fieldset': { borderColor: 'rgba(255,255,255,0.2)' },
+                                    '&:hover fieldset': { borderColor: '#6366f1' },
                                 },
-                                '& .MuiInputBase-input': {
-                                    color: '#ffffff',
-                                    '&::placeholder': {
-                                        color: 'rgba(255,255,255,0.5)',
-                                        opacity: 1
-                                    }
-                                }
+                                '& .MuiInputLabel-root': { color: '#94a3b8' },
                             }}
                         />
 
@@ -253,23 +218,30 @@ const Register = () => {
                             type="submit"
                             variant="contained"
                             size="large"
-                            sx={{
-                                mt: 3,
+                            disabled={loading}
+                            sx={{ 
+                                mt: 3, 
                                 mb: 2,
-                                background: 'linear-gradient(to right, var(--primary-color), var(--secondary-color))',
-                                color: '#ffffff',
+                                background: 'linear-gradient(to right, #6366f1, #a855f7)',
                                 fontWeight: 'bold',
                                 '&:hover': {
-                                    background: 'linear-gradient(to right, rgba(99, 102, 241, 0.9), rgba(168, 85, 247, 0.9))',
+                                    background: 'linear-gradient(to right, #4f46e5, #9333ea)',
                                 }
                             }}
                         >
-                            Register
+                            {loading ? <CircularProgress size={24} color="inherit" /> : 'Register'}
                         </Button>
                     </form>
 
-                    <Typography textAlign="center" sx={{ color: '#cbd5e1' }}>
-                        Already have an account? <Link to="/login" style={{ color: 'var(--primary-color)' }}>Login</Link>
+                    <Divider sx={{ my: 2, borderColor: 'rgba(255,255,255,0.1)' }}>OR</Divider>
+
+                    <Box id="googleSignUpDiv" sx={{ width: '100%', display: 'flex', justifyContent: 'center', mb: 2 }}></Box>
+
+                    <Typography align="center" sx={{ color: '#94a3b8', mt: 2 }}>
+                        Already have an account?{' '}
+                        <Link to="/login" style={{ color: '#6366f1', textDecoration: 'none', fontWeight: 'bold' }}>
+                            Login
+                        </Link>
                     </Typography>
                 </Paper>
             </motion.div>
