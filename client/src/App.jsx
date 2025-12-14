@@ -4,12 +4,8 @@ import { Box, CircularProgress } from '@mui/material';
 import Navbar from './components/Navbar';
 import Login from './pages/Login';
 import Register from './pages/Register';
-// import Dashboard from './pages/Dashboard';
-// import Profile from './pages/Profile';
-// import Problems from './pages/Problems';
-// import Compare from './pages/Compare';
-// import Contests from './pages/Contests';
-// import Bookmarks from './pages/Bookmarks';
+import Dashboard from './pages/Dashboard';
+import Profile from './pages/Profile';
 
 const PrivateRoute = ({ children }) => {
     const { user, loading } = useAuth();
@@ -38,11 +34,9 @@ function App() {
                 <Routes>
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
-                    {/* <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} /> */}
-                    {/* <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} /> */}
-                    {/* <Route path="/problems" element={<PrivateRoute><Problems /></PrivateRoute>} /> */}
+                    <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+                    <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
                     <Route path="/" element={<div>Welcome to CP Analyzer</div>} />
-                    {/* Routes will be added in future commits */}
                 </Routes>
             </div>
         </div>
