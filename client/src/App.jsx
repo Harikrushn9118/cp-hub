@@ -6,6 +6,10 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
+import Problems from './pages/Problems';
+import Contests from './pages/Contests';
+import Compare from './pages/Compare';
+import Bookmarks from './pages/Bookmarks';
 
 const PrivateRoute = ({ children }) => {
     const { user, loading } = useAuth();
@@ -36,6 +40,10 @@ function App() {
                     <Route path="/register" element={<Register />} />
                     <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
                     <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
+                    <Route path="/problems" element={<PrivateRoute><Problems /></PrivateRoute>} />
+                    <Route path="/contests" element={<PrivateRoute><Contests /></PrivateRoute>} />
+                    <Route path="/compare" element={<PrivateRoute><Compare /></PrivateRoute>} />
+                    <Route path="/bookmarks" element={<PrivateRoute><Bookmarks /></PrivateRoute>} />
                     <Route path="/" element={<div>Welcome to CP Analyzer</div>} />
                 </Routes>
             </div>
