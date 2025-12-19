@@ -2,12 +2,9 @@ import { useState } from 'react';
 import axios from 'axios';
 import {
     Box, TextField, Button, Typography, Grid, Paper, CircularProgress,
-    Alert, Card, CardContent, Stack, Divider, Chip
+    Alert, Card, CardContent, Avatar, Chip
 } from '@mui/material';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, Label } from 'recharts';
-import { motion } from 'framer-motion';
-import TrendingUpIcon from '@mui/icons-material/TrendingUp';
-import TrendingDownIcon from '@mui/icons-material/TrendingDown';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 
 const Compare = () => {
     const [handle1, setHandle1] = useState('');
