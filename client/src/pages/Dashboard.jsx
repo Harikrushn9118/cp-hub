@@ -15,7 +15,7 @@ import CodeIcon from '@mui/icons-material/Code';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8', '#82ca9d'];
+const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#6366f1', '#a855f7'];
 
 const Dashboard = () => {
     const { user } = useAuth();
@@ -175,7 +175,7 @@ const Dashboard = () => {
                                 <XAxis dataKey="date" stroke="#94a3b8" />
                                 <YAxis stroke="#94a3b8" domain={['auto', 'auto']} />
                                 <Tooltip contentStyle={{ backgroundColor: '#1e293b', border: 'none' }} />
-                                <Line type="monotone" dataKey="newRating" stroke="#8884d8" strokeWidth={2} dot={false} />
+                                <Line type="monotone" dataKey="newRating" stroke="#6366f1" strokeWidth={2} dot={false} />
                             </LineChart>
                         </ResponsiveContainer>
                     </Paper>
@@ -213,7 +213,7 @@ const Dashboard = () => {
                                 <XAxis dataKey="name" stroke="#94a3b8" />
                                 <YAxis stroke="#94a3b8" />
                                 <Tooltip contentStyle={{ backgroundColor: '#1e293b', border: 'none' }} />
-                                <Bar dataKey="value" fill="#82ca9d" />
+                                <Bar dataKey="value" fill="#a855f7" />
                             </BarChart>
                         </ResponsiveContainer>
                     </Paper>

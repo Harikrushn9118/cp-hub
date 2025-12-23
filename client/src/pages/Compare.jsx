@@ -2,7 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import {
     Box, TextField, Button, Typography, Grid, Paper, CircularProgress,
-    Alert, Card, CardContent, Avatar, Chip
+    Alert, CardContent, Avatar, Chip
 } from '@mui/material';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 
@@ -162,15 +162,15 @@ const Compare = () => {
                     <Grid container spacing={3} sx={{ mb: 3 }}>
                         {comparisonData.map((item, idx) => (
                             <Grid item xs={12} sm={6} md={3} key={idx}>
-                                <Card sx={{ bgcolor: 'rgba(255,255,255,0.05)' }}>
-                                    <CardContent>
+                                <Paper className="glass-card" sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', p: 2 }}>
+                                    <CardContent sx={{ p: '0 !important' }}>
                                         <Typography color="text.secondary" gutterBottom>{item.metric}</Typography>
-                                        <Box display="flex" justifyContent="space-between">
-                                            <Typography variant="h6">{item.user1}</Typography>
-                                            <Typography variant="h6">{item.user2}</Typography>
+                                        <Box display="flex" justifyContent="space-between" alignItems="center">
+                                            <Typography variant="h6" fontWeight="bold" sx={{ color: 'var(--text-primary)' }}>{item.user1}</Typography>
+                                            <Typography variant="h6" fontWeight="bold" sx={{ color: 'var(--text-primary)' }}>{item.user2}</Typography>
                                         </Box>
                                     </CardContent>
-                                </Card>
+                                </Paper>
                             </Grid>
                         ))}
                     </Grid>
