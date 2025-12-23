@@ -1,15 +1,15 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from './context/AuthContext';
-import { Box, CircularProgress } from '@mui/material';
 import Navbar from './components/Navbar';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
-import Profile from './pages/Profile';
+import Compare from './pages/Compare';
 import Problems from './pages/Problems';
 import Contests from './pages/Contests';
-import Compare from './pages/Compare';
 import Bookmarks from './pages/Bookmarks';
+import Profile from './pages/Profile';
+import { Box, CircularProgress } from '@mui/material';
 
 const PrivateRoute = ({ children }) => {
     const { user, loading } = useAuth();
@@ -38,13 +38,48 @@ function App() {
                 <Routes>
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
-                    <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
-                    <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
-                    <Route path="/problems" element={<PrivateRoute><Problems /></PrivateRoute>} />
-                    <Route path="/contests" element={<PrivateRoute><Contests /></PrivateRoute>} />
-                    <Route path="/compare" element={<PrivateRoute><Compare /></PrivateRoute>} />
-                    <Route path="/bookmarks" element={<PrivateRoute><Bookmarks /></PrivateRoute>} />
-                    <Route path="/" element={<div>Welcome to CP Analyzer</div>} />
+
+                    <Route path="/" element={
+                        <PrivateRoute>
+                            <Dashboard />
+                        </PrivateRoute>
+                    } />
+
+                    <Route path="/dashboard" element={
+                        <PrivateRoute>
+                            <Dashboard />
+                        </PrivateRoute>
+                    } />
+
+                    <Route path="/compare" element={
+                        <PrivateRoute>
+                            <Compare />
+                        </PrivateRoute>
+                    } />
+
+                    <Route path="/problems" element={
+                        <PrivateRoute>
+                            <Problems />
+                        </PrivateRoute>
+                    } />
+
+                    <Route path="/contests" element={
+                        <PrivateRoute>
+                            <Contests />
+                        </PrivateRoute>
+                    } />
+
+                    <Route path="/bookmarks" element={
+                        <PrivateRoute>
+                            <Bookmarks />
+                        </PrivateRoute>
+                    } />
+
+                    <Route path="/profile" element={
+                        <PrivateRoute>
+                            <Profile />
+                        </PrivateRoute>
+                    } />
                 </Routes>
             </div>
         </div>
