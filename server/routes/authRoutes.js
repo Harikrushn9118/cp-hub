@@ -38,8 +38,8 @@ router.post('/signup', async (req, res) => {
         if (existingUser) {
             // If user exists with Google OAuth, suggest they use Google login
             if (existingUser.googleId) {
-                return res.status(400).json({ 
-                    error: 'An account with this email already exists. Please use Google login.' 
+                return res.status(400).json({
+                    error: 'An account with this email already exists. Please use Google login.'
                 });
             }
             return res.status(400).json({ error: 'An account with this email already exists' });
@@ -72,8 +72,8 @@ router.post('/signup', async (req, res) => {
         });
     } catch (error) {
         console.error('Signup error:', error);
-        res.status(500).json({ 
-            error: error.message || 'Error creating user account' 
+        res.status(500).json({
+            error: error.message || 'Error creating user account'
         });
     }
 });
@@ -81,29 +81,38 @@ router.post('/signup', async (req, res) => {
 
 router.post('/login', async (req, res) => {
     try {
-        const { email, password } = req.body;
+        const { email, username, password } = req.body;
+        const identifier = email || username;
 
-        if (!email || !password) {
-            return res.status(400).json({ error: 'Email and password are required' });
+        if (!identifier || !password) {
+            return res.status(400).json({ error: 'Email/Username and password are required' });
         }
 
-        const user = await prisma.user.findUnique({ where: { email } });
+        // Find user by email or username
+        const user = await prisma.user.findFirst({
+            where: {
+                OR: [
+                    { email: identifier },
+                    { username: identifier }
+                ]
+            }
+        });
 
         if (!user) {
-            return res.status(401).json({ error: 'Invalid email or password' });
+            return res.status(401).json({ error: 'Invalid credentials' });
         }
 
         // Check if user has a password (not Google OAuth only)
         if (!user.password) {
-            return res.status(401).json({ 
-                error: 'This account uses Google login. Please sign in with Google.' 
+            return res.status(401).json({
+                error: 'This account uses Google login. Please sign in with Google.'
             });
         }
 
         // Verify password
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
-            return res.status(401).json({ error: 'Invalid email or password' });
+            return res.status(401).json({ error: 'Invalid credentials' });
         }
 
         res.json({
@@ -130,13 +139,13 @@ router.post('/google', async (req, res) => {
 
         // Verify Google token
         const googleUser = await verifyGoogleToken(token);
-        
+
         if (!googleUser.email || !googleUser.sub) {
             return res.status(400).json({ error: 'Invalid Google account information' });
         }
 
-        let user = await prisma.user.findFirst({ 
-            where: { 
+        let user = await prisma.user.findFirst({
+            where: {
                 OR: [
                     { email: googleUser.email },
                     { googleId: googleUser.sub }
@@ -157,9 +166,9 @@ router.post('/google', async (req, res) => {
             }
         } else {
             // Create new user
-            const username = googleUser.name?.replace(/\s+/g, '').toLowerCase() || 
-                           googleUser.email.split('@')[0];
-            
+            const username = googleUser.name?.replace(/\s+/g, '').toLowerCase() ||
+                googleUser.email.split('@')[0];
+
             // Ensure username is unique
             let uniqueUsername = username;
             let counter = 1;
@@ -174,7 +183,7 @@ router.post('/google', async (req, res) => {
                     email: googleUser.email,
                     googleId: googleUser.sub,
                     profilePicture: googleUser.picture || null,
-                    password: null, 
+                    password: null,
                 }
             });
         }
