@@ -79,7 +79,7 @@ router.get('/contests', async (req, res) => {
 
         if (response.data.status === 'OK') {
             const upcoming = response.data.result
-                .filter(c => c.phase === 'BEFORE')
+                .filter(c => c.phase === 'BEFORE' || c.phase === 'CODING')
                 .sort((a, b) => a.startTimeSeconds - b.startTimeSeconds);
             res.json(upcoming);
         } else {

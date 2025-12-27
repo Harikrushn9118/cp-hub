@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { 
-    Box, Typography, Grid, Paper, Chip, CircularProgress, Button, 
-    TextField, InputAdornment, Alert 
+import {
+    Box, Typography, Grid, Paper, Chip, CircularProgress, Button,
+    TextField, InputAdornment, Alert
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import EventIcon from '@mui/icons-material/Event';
@@ -95,12 +95,12 @@ const Contests = () => {
                     {filteredContests.map((contest) => (
                         <Grid item xs={12} key={contest.id}>
                             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
-                                <Paper 
-                                    className="glass-card" 
-                                    sx={{ 
-                                        p: 3, 
-                                        display: 'flex', 
-                                        justifyContent: 'space-between', 
+                                <Paper
+                                    className="glass-card"
+                                    sx={{
+                                        p: 3,
+                                        display: 'flex',
+                                        justifyContent: 'space-between',
                                         alignItems: 'center',
                                         flexWrap: 'wrap',
                                         gap: 2,
@@ -122,17 +122,35 @@ const Contests = () => {
                                             </Box>
                                         </Box>
                                     </Box>
-                                    <Box display="flex" alignItems="center" gap={2}>
-                                        {contest.phase === 'CODING' && (
-                                            <Chip label="LIVE" color="success" size="small" />
-                                        )}
-                                        <Button 
-                                            variant="contained" 
-                                            href="https://codeforces.com/contests" 
+                                    <Box display="flex" flexDirection="column" gap={1} alignItems="flex-end">
+                                        <Box display="flex" alignItems="center" gap={1}>
+                                            {contest.phase === 'CODING' ? (
+                                                <Chip label="LIVE" color="success" size="small" />
+                                            ) : (
+                                                ((contest.startTimeSeconds * 1000) - Date.now()) < 172800000 ? (
+                                                    // Less than 48 hours (assumed registration open)
+                                                    <Typography variant="caption" color="warning.main" fontWeight="bold">
+                                                        Registration closes soon
+                                                    </Typography>
+                                                ) : (
+                                                    <Typography variant="caption" color="text.secondary">
+                                                        Registration opens in ~{formatDuration(((contest.startTimeSeconds * 1000) - Date.now() - 172800000) / 1000)}
+                                                    </Typography>
+                                                )
+                                            )}
+                                        </Box>
+                                        <Button
+                                            variant="contained"
+                                            href={`https://codeforces.com/contest/${contest.id}`}
                                             target="_blank"
-                                            sx={{ background: 'var(--primary-color)' }}
+                                            sx={{
+                                                bgcolor: contest.phase === 'CODING' ? 'success.main' : 'primary.main',
+                                                '&:hover': {
+                                                    bgcolor: contest.phase === 'CODING' ? 'success.dark' : 'primary.dark',
+                                                }
+                                            }}
                                         >
-                                            Register / Enter
+                                            {contest.phase === 'CODING' ? 'Enter Arena' : 'Register / Enter'}
                                         </Button>
                                     </Box>
                                 </Paper>
