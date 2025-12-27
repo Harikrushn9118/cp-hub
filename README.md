@@ -101,14 +101,7 @@ cp-hub/
 
 ---
 
-## 📄 Resume / LinkedIn Summary
-> **Competitive Programming Companion (CP-Hub)**  
-> - Developed a full-stack analytics dashboard using **React**, **Node.js**, and **MySQL**.  
-> - Architected a **server-side proxy** to handle CORS and aggregate real-time data from Codeforces API.  
-> - Implemented **real-time data synchronization** to track problem-solving progress across platforms.  
-> - Designed an interactive dashboard with **Recharts** for visualizing submission trends and rating trajectories.
 
----
 
 ## 🔌 Quick Start
 
