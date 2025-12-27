@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
-import { 
-    Box, Typography, Grid, Paper, CircularProgress, Button, 
-    Card, CardContent, Avatar, Chip, Alert 
+import {
+    Box, Typography, Grid, Paper, CircularProgress, Button,
+    Card, CardContent, Avatar, Chip, Alert
 } from '@mui/material';
-import { 
-    LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, 
-    PieChart, Pie, Cell, BarChart, Bar, Legend 
+import {
+    LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
+    PieChart, Pie, Cell, BarChart, Bar, Legend
 } from 'recharts';
 import { motion } from 'framer-motion';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
@@ -174,7 +174,10 @@ const Dashboard = () => {
                                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
                                 <XAxis dataKey="date" stroke="#94a3b8" />
                                 <YAxis stroke="#94a3b8" domain={['auto', 'auto']} />
-                                <Tooltip contentStyle={{ backgroundColor: '#1e293b', border: 'none' }} />
+                                <Tooltip
+                                    contentStyle={{ backgroundColor: '#1e293b', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: '#f8fafc' }}
+                                    itemStyle={{ color: '#f8fafc' }}
+                                />
                                 <Line type="monotone" dataKey="newRating" stroke="#6366f1" strokeWidth={2} dot={false} />
                             </LineChart>
                         </ResponsiveContainer>
@@ -198,7 +201,10 @@ const Dashboard = () => {
                                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                                     ))}
                                 </Pie>
-                                <Tooltip contentStyle={{ backgroundColor: '#1e293b', border: 'none' }} />
+                                <Tooltip
+                                    contentStyle={{ backgroundColor: '#1e293b', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: '#f8fafc' }}
+                                    itemStyle={{ color: '#f8fafc' }}
+                                />
                                 <Legend />
                             </PieChart>
                         </ResponsiveContainer>
@@ -212,7 +218,11 @@ const Dashboard = () => {
                                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
                                 <XAxis dataKey="name" stroke="#94a3b8" />
                                 <YAxis stroke="#94a3b8" />
-                                <Tooltip contentStyle={{ backgroundColor: '#1e293b', border: 'none' }} />
+                                <Tooltip
+                                    contentStyle={{ backgroundColor: '#1e293b', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: '#f8fafc' }}
+                                    cursor={{ fill: 'rgba(255,255,255,0.05)' }}
+                                    itemStyle={{ color: '#f8fafc' }}
+                                />
                                 <Bar dataKey="value" fill="#a855f7" />
                             </BarChart>
                         </ResponsiveContainer>

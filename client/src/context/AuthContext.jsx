@@ -30,8 +30,8 @@ export const AuthProvider = ({ children }) => {
             console.error('Error fetching profile:', error);
             // If token is invalid, clear it
             if (error.response?.status === 401) {
-            localStorage.removeItem('token');
-            delete axios.defaults.headers.common['Authorization'];
+                localStorage.removeItem('token');
+                delete axios.defaults.headers.common['Authorization'];
             }
             throw error;
         } finally {
@@ -39,8 +39,8 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    const login = async (email, password) => {
-        const res = await axios.post(`${API_URL}/auth/login`, { email, password });
+    const login = async (email, password, username) => {
+        const res = await axios.post(`${API_URL}/auth/login`, { email, password, username });
         const { token, ...userData } = res.data;
         // Store token - will persist for 6 hours (handled by backend JWT expiration)
         localStorage.setItem('token', token);

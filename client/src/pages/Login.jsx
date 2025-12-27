@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { 
-    Box, TextField, Button, Typography, Paper, InputAdornment, 
-    IconButton, Alert, CircularProgress, Divider 
+import {
+    Box, TextField, Button, Typography, Paper, InputAdornment,
+    IconButton, Alert, CircularProgress, Divider
 } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
@@ -13,7 +13,7 @@ import GoogleIcon from '@mui/icons-material/Google';
 import { motion } from 'framer-motion';
 
 const Login = () => {
-    const [email, setEmail] = useState('');
+    const [identifier, setIdentifier] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState('');
@@ -59,7 +59,9 @@ const Login = () => {
         setError('');
         setLoading(true);
         try {
-            await login(email, password);
+            // Determine if input is email
+            const isEmail = identifier.includes('@');
+            await login(isEmail ? identifier : undefined, password, !isEmail ? identifier : undefined);
             navigate('/dashboard');
         } catch (err) {
             setError(err.response?.data?.message || 'Failed to login');
@@ -69,10 +71,10 @@ const Login = () => {
     };
 
     return (
-        <Box 
-            display="flex" 
-            justifyContent="center" 
-            alignItems="center" 
+        <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
             minHeight="80vh"
         >
             <motion.div
@@ -80,11 +82,11 @@ const Login = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
             >
-                <Paper 
+                <Paper
                     className="glass-card"
-                    sx={{ 
-                        p: 4, 
-                        width: '100%', 
+                    sx={{
+                        p: 4,
+                        width: '100%',
                         maxWidth: 400,
                         backgroundColor: 'rgba(30, 41, 59, 0.8)',
                         border: '1px solid rgba(255,255,255,0.1)'
@@ -102,11 +104,11 @@ const Login = () => {
                     <form onSubmit={handleSubmit}>
                         <TextField
                             fullWidth
-                            label="Email"
+                            label="Email or Username"
                             variant="outlined"
                             margin="normal"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            value={identifier}
+                            onChange={(e) => setIdentifier(e.target.value)}
                             required
                             InputProps={{
                                 startAdornment: (
@@ -167,8 +169,8 @@ const Login = () => {
                             variant="contained"
                             size="large"
                             disabled={loading}
-                            sx={{ 
-                                mt: 3, 
+                            sx={{
+                                mt: 3,
                                 mb: 2,
                                 background: 'linear-gradient(to right, #6366f1, #a855f7)',
                                 fontWeight: 'bold',
