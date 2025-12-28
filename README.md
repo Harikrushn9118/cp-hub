@@ -2,18 +2,18 @@
 
 **Competitive Programming Companion & Analytics Dashboard**
 
-CP-Hub is a full-stack web application that helps users track and analyze their competitive programming progress. It integrates the **Codeforces API** with a custom **Node.js + MySQL backend** to provide user comparisons, problem tracking, and near real-time contest updates through an interactive dashboard.
+CP-Hub is a full-stack web application that helps users track and analyze their competitive programming progress. It integrates the **Codeforces API** with a custom **Node.js + PostgreSQL backend** to provide user comparisons, problem tracking, and near real-time contest updates through an interactive dashboard.
 
 ![React](https://img.shields.io/badge/Frontend-React_Vite-blue)
 ![Node](https://img.shields.io/badge/Backend-Node_Express-green)
-![DB](https://img.shields.io/badge/Database-MySQL_Prisma-orange)
+![DB](https://img.shields.io/badge/Database-PostgreSQL_Prisma-blue)
 ![License](https://img.shields.io/badge/License-MIT-lightgrey)
 
 ---
 
 ## 🎯 Project Highlights
 
-- Full-stack architecture using React, Node.js, Express, and MySQL  
+- Full-stack architecture using React, Node.js, Express, and PostgreSQL  
 - API orchestration to fetch, process, and normalize Codeforces data  
 - Live synchronization of bookmarks with Codeforces submissions  
 - Secure authentication using JWT and Google OAuth  
@@ -58,7 +58,7 @@ The system architecture consists of four main layers:
 1.  **Client (React + Vite)** – Handles UI, interactive charts, and user interactions.  
 2.  **Proxy Layer (Express API)** – Fetches and normalizes data from Codeforces, handles authentication, and forwards requests.  
 3.  **External Source (Codeforces API)** – Provides live user and contest data.  
-4.  **Database (MySQL + Prisma)** – Stores users, bookmarks, sessions, and local caching.
+4.  **Database (PostgreSQL + Prisma)** – Stores users, bookmarks, sessions, and local caching.
 
 ---
 
@@ -96,7 +96,7 @@ cp-hub/
 |--------|--------------|
 | **Frontend** | React.js, Vite, Material UI, Recharts, Framer Motion |
 | **Backend** | Node.js, Express, Prisma ORM |
-| **Database** | MySQL |
+| **Database** | PostgreSQL |
 | **Authentication** | JWT, Google OAuth 2.0 |
 
 ---
