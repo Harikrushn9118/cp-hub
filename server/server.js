@@ -32,13 +32,17 @@ checkConnection();
 
 // Routes
 app.get('/', (req, res) => {
-    res.send('CP Analyzer API is running');
+  res.send('CP Analyzer API is running');
 });
 
 app.use('/api/auth', authRoutes);
 app.use('/api/cf', cfRoutes);
 app.use('/api/users', userRoutes);
 
-app.listen(PORT, () => {
+if (require.main === module) {
+  app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
-});
+  });
+}
+
+module.exports = app;
