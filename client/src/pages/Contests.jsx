@@ -19,7 +19,7 @@ const Contests = () => {
     useEffect(() => {
         const fetchContests = async () => {
             try {
-                const res = await axios.get('http://localhost:5001/api/cf/contests');
+                const res = await axios.get(`${import.meta.env.VITE_API_URL}/cf/contests`);
                 // Filter for upcoming or current contests (phase: BEFORE or CODING)
                 const activeContests = res.data.filter(c => c.phase === 'BEFORE' || c.phase === 'CODING');
                 setContests(activeContests);

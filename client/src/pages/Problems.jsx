@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
-import { 
+import {
     Box, Typography, Grid, Paper, Chip, IconButton, TextField, Button, CircularProgress,
     FormControl, InputLabel, Select, MenuItem, ToggleButtonGroup, ToggleButton,
     InputAdornment, Alert, Skeleton, Stack, Switch, FormControlLabel
@@ -74,7 +74,7 @@ const Problems = () => {
     const fetchBookmarks = async () => {
         try {
             const token = localStorage.getItem('token');
-            const res = await axios.get('http://localhost:5001/api/users/bookmarks', {
+            const res = await axios.get(`${import.meta.env.VITE_API_URL}/users/bookmarks`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             const bookmarkedIds = new Set(res.data.map(b => b.problem_id));
@@ -88,9 +88,9 @@ const Problems = () => {
 
     const fetchSolvedProblems = async () => {
         if (!user?.codeforces_handle) return;
-        
+
         try {
-            const res = await axios.get(`http://localhost:5001/api/cf/user/${user.codeforces_handle}/status`);
+            const res = await axios.get(`${import.meta.env.VITE_API_URL}/cf/user/${user.codeforces_handle}/status`);
             if (res.data && Array.isArray(res.data)) {
                 const solved = new Set();
                 res.data.forEach(submission => {
@@ -110,7 +110,7 @@ const Problems = () => {
         setLoading(true);
         setError('');
         try {
-            const res = await axios.get('http://localhost:5001/api/cf/problems');
+            const res = await axios.get(`${import.meta.env.VITE_API_URL}/cf/problems`);
             if (res.data && res.data.problems) {
                 setAllProblems(res.data.problems);
                 setProblemStats(res.data.problemStatistics || []);
@@ -130,8 +130,8 @@ const Problems = () => {
     };
 
     const toggleTag = (tag) => {
-        setSelectedTags(prev => 
-            prev.includes(tag) 
+        setSelectedTags(prev =>
+            prev.includes(tag)
                 ? prev.filter(t => t !== tag)
                 : [...prev, tag]
         );
@@ -141,12 +141,12 @@ const Problems = () => {
         const problemId = `${problem.contestId}${problem.index}`;
         const isBookmarked = bookmarks.has(problemId);
         const token = localStorage.getItem('token');
-        
+
         try {
             if (isBookmarked) {
                 const bookmarkId = bookmarkMap.get(problemId);
                 if (bookmarkId) {
-                    await axios.delete(`http://localhost:5001/api/users/bookmarks/${bookmarkId}`, {
+                    await axios.delete(`${import.meta.env.VITE_API_URL}/users/bookmarks/${bookmarkId}`, {
                         headers: { Authorization: `Bearer ${token}` }
                     });
                     setBookmarks(prev => {
@@ -161,7 +161,7 @@ const Problems = () => {
                     });
                 }
             } else {
-                const res = await axios.post('http://localhost:5001/api/users/bookmarks', {
+                const res = await axios.post(`${import.meta.env.VITE_API_URL}/users/bookmarks`, {
                     problem_id: problemId,
                     problem_name: problem.name,
                     rating: problem.rating,
@@ -197,7 +197,7 @@ const Problems = () => {
         }
 
         if (selectedTags.length > 0) {
-            filtered = filtered.filter(problem => 
+            filtered = filtered.filter(problem =>
                 selectedTags.every(tag => problem.tags?.includes(tag))
             );
         }
@@ -211,7 +211,7 @@ const Problems = () => {
 
         if (searchQuery.trim()) {
             const query = searchQuery.toLowerCase();
-            filtered = filtered.filter(problem => 
+            filtered = filtered.filter(problem =>
                 problem.name?.toLowerCase().includes(query) ||
                 `${problem.contestId}${problem.index}`.toLowerCase().includes(query)
             );
@@ -222,7 +222,7 @@ const Problems = () => {
             const keyB = `${b.contestId}${b.index}`;
             const statA = statsMap.get(keyA);
             const statB = statsMap.get(keyB);
-            
+
             switch (sortBy) {
                 case 'solved':
                     const solvedA = statA?.solvedCount || 0;
@@ -326,11 +326,11 @@ const Problems = () => {
                             sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}
                         >
                             {RATING_RANGES.map((range) => (
-                                <ToggleButton 
-                                    key={range.label} 
+                                <ToggleButton
+                                    key={range.label}
                                     value={range.label}
-                                    sx={{ 
-                                        color: '#cbd5e1', 
+                                    sx={{
+                                        color: '#cbd5e1',
                                         borderColor: 'rgba(255,255,255,0.3)',
                                         '&.Mui-selected': { backgroundColor: 'var(--primary-color)', color: '#fff' }
                                     }}
@@ -409,10 +409,10 @@ const Problems = () => {
                             return (
                                 <Grid item xs={12} md={6} lg={4} key={problemId}>
                                     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-                                        <Paper 
-                                            className="glass-card" 
-                                            sx={{ 
-                                                p: 2.5, 
+                                        <Paper
+                                            className="glass-card"
+                                            sx={{
+                                                p: 2.5,
                                                 height: '100%',
                                                 display: 'flex',
                                                 flexDirection: 'column',

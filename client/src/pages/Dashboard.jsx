@@ -34,9 +34,9 @@ const Dashboard = () => {
 
             try {
                 const [userInfo, ratings, subs] = await Promise.all([
-                    axios.get(`http://localhost:5001/api/cf/user/${user.codeforces_handle}`),
-                    axios.get(`http://localhost:5001/api/cf/user/${user.codeforces_handle}/rating`),
-                    axios.get(`http://localhost:5001/api/cf/user/${user.codeforces_handle}/status`)
+                    axios.get(`${import.meta.env.VITE_API_URL}/cf/user/${user.codeforces_handle}`),
+                    axios.get(`${import.meta.env.VITE_API_URL}/cf/user/${user.codeforces_handle}/rating`),
+                    axios.get(`${import.meta.env.VITE_API_URL}/cf/user/${user.codeforces_handle}/status`)
                 ]);
 
                 setCfData(userInfo.data);

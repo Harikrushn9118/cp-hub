@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { 
-    Box, Typography, Paper, TextField, Button, Grid, Avatar, 
-    Alert, CircularProgress, Divider 
+import {
+    Box, Typography, Paper, TextField, Button, Grid, Avatar,
+    Alert, CircularProgress, Divider
 } from '@mui/material';
 import { motion } from 'framer-motion';
 import PersonIcon from '@mui/icons-material/Person';
@@ -29,11 +29,11 @@ const Profile = () => {
             // Update user profile via API
             const token = localStorage.getItem('token');
             const res = await axios.put(
-                'http://localhost:5001/api/users/profile',
+                `${import.meta.env.VITE_API_URL}/users/profile`,
                 { email, codeforces_handle: cfHandle },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
-            
+
             updateUser(res.data);
             setSuccess('Profile updated successfully!');
         } catch (err) {
@@ -56,10 +56,10 @@ const Profile = () => {
             >
                 <Paper className="glass-card" sx={{ p: 4, mt: 2 }}>
                     <Box display="flex" alignItems="center" gap={3} mb={4}>
-                        <Avatar 
-                            sx={{ 
-                                width: 100, 
-                                height: 100, 
+                        <Avatar
+                            sx={{
+                                width: 100,
+                                height: 100,
                                 bgcolor: 'var(--primary-color)',
                                 fontSize: '2.5rem'
                             }}

@@ -28,12 +28,12 @@ const Compare = () => {
         setError('');
         try {
             const [u1, u2, r1, r2, s1, s2] = await Promise.all([
-                axios.get(`http://localhost:5001/api/cf/user/${handle1}`),
-                axios.get(`http://localhost:5001/api/cf/user/${handle2}`),
-                axios.get(`http://localhost:5001/api/cf/user/${handle1}/rating`),
-                axios.get(`http://localhost:5001/api/cf/user/${handle2}/rating`),
-                axios.get(`http://localhost:5001/api/cf/user/${handle1}/status`).catch(() => ({ data: [] })),
-                axios.get(`http://localhost:5001/api/cf/user/${handle2}/status`).catch(() => ({ data: [] }))
+                axios.get(`${import.meta.env.VITE_API_URL}/cf/user/${handle1}`),
+                axios.get(`${import.meta.env.VITE_API_URL}/cf/user/${handle2}`),
+                axios.get(`${import.meta.env.VITE_API_URL}/cf/user/${handle1}/rating`),
+                axios.get(`${import.meta.env.VITE_API_URL}/cf/user/${handle2}/rating`),
+                axios.get(`${import.meta.env.VITE_API_URL}/cf/user/${handle1}/status`).catch(() => ({ data: [] })),
+                axios.get(`${import.meta.env.VITE_API_URL}/cf/user/${handle2}/status`).catch(() => ({ data: [] }))
             ]);
             setData1(u1.data);
             setData2(u2.data);
