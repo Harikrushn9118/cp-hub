@@ -14,6 +14,7 @@ import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import CodeIcon from '@mui/icons-material/Code';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import AssignmentIcon from '@mui/icons-material/Assignment';
+import { API_BASE_URL } from '../config/api';
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#6366f1', '#a855f7'];
 
@@ -34,9 +35,9 @@ const Dashboard = () => {
 
             try {
                 const [userInfo, ratings, subs] = await Promise.all([
-                    axios.get(`${import.meta.env.VITE_API_URL}/cf/user/${user.codeforces_handle}`),
-                    axios.get(`${import.meta.env.VITE_API_URL}/cf/user/${user.codeforces_handle}/rating`),
-                    axios.get(`${import.meta.env.VITE_API_URL}/cf/user/${user.codeforces_handle}/status`)
+                    axios.get(`${API_BASE_URL}/cf/user/${user.codeforces_handle}`),
+                    axios.get(`${API_BASE_URL}/cf/user/${user.codeforces_handle}/rating`),
+                    axios.get(`${API_BASE_URL}/cf/user/${user.codeforces_handle}/status`)
                 ]);
 
                 setCfData(userInfo.data);

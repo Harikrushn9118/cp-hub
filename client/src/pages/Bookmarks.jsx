@@ -10,6 +10,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
+import { API_BASE_URL } from '../config/api';
 
 const Bookmarks = () => {
     const { user } = useAuth();
@@ -46,7 +47,7 @@ const Bookmarks = () => {
         setLoading(true);
         try {
             const token = localStorage.getItem('token');
-            const res = await axios.get(`${import.meta.env.VITE_API_URL}/users/bookmarks`, {
+            const res = await axios.get(`${API_BASE_URL}/users/bookmarks`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setBookmarks(res.data);
@@ -62,7 +63,7 @@ const Bookmarks = () => {
     const fetchUserSubmissions = async () => {
         try {
             const handle = user.codeforces_handle;
-            const response = await axios.get(`${import.meta.env.VITE_API_URL}/cf/user/${handle}/status`);
+            const response = await axios.get(`${API_BASE_URL}/cf/user/${handle}/status`);
 
             if (Array.isArray(response.data)) {
                 const solved = new Set();
@@ -82,7 +83,7 @@ const Bookmarks = () => {
     const deleteBookmark = async (bookmarkId) => {
         try {
             const token = localStorage.getItem('token');
-            await axios.delete(`${import.meta.env.VITE_API_URL}/users/bookmarks/${bookmarkId}`, {
+            await axios.delete(`${API_BASE_URL}/users/bookmarks/${bookmarkId}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setBookmarks(prev => prev.filter(b => b.id !== bookmarkId));

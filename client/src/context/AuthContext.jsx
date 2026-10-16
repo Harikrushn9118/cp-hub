@@ -1,9 +1,8 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_BASE_URL } from '../config/api';
 
 const AuthContext = createContext();
-
-const API_URL = import.meta.env.VITE_API_URL;
 
 export const useAuth = () => useContext(AuthContext);
 
@@ -23,7 +22,7 @@ export const AuthProvider = ({ children }) => {
 
     const fetchProfile = async () => {
         try {
-            const res = await axios.get(`${API_URL}/users/profile`);
+            const res = await axios.get(`${API_BASE_URL}/users/profile`);
             setUser(res.data);
             return res.data;
         } catch (error) {
@@ -40,7 +39,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     const login = async (email, password, username) => {
-        const res = await axios.post(`${API_URL}/auth/login`, { email, password, username });
+        const res = await axios.post(`${API_BASE_URL}/auth/login`, { email, password, username });
         const { token, ...userData } = res.data;
         // Store token - will persist for 6 hours (handled by backend JWT expiration)
         localStorage.setItem('token', token);
@@ -50,7 +49,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     const register = async (username, email, password, codeforces_handle) => {
-        const res = await axios.post(`${API_URL}/auth/signup`, {
+        const res = await axios.post(`${API_BASE_URL}/auth/signup`, {
             username,
             email,
             password,
@@ -65,7 +64,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     const loginWithGoogle = async (credential) => {
-        const res = await axios.post(`${API_URL}/auth/google`, { token: credential });
+        const res = await axios.post(`${API_BASE_URL}/auth/google`, { token: credential });
         const { token, ...userData } = res.data;
         // Store token - will persist for 6 hours (handled by backend JWT expiration)
         localStorage.setItem('token', token);
@@ -80,6 +79,10 @@ export const AuthProvider = ({ children }) => {
         setUser(null);
     };
 
+    const updateUser = (updatedUser) => {
+        setUser((currentUser) => ({ ...currentUser, ...updatedUser }));
+    };
+
     const value = {
         user,
         loading,
@@ -87,12 +90,13 @@ export const AuthProvider = ({ children }) => {
         register,
         loginWithGoogle,
         logout,
+        updateUser,
         fetchProfile
     };
 
     return (
         <AuthContext.Provider value={value}>
-            {!loading && children}
+            {children}
         </AuthContext.Provider>
     );
 };

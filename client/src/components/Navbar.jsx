@@ -1,94 +1,56 @@
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { AppBar, Toolbar, Button, Typography, Box, IconButton, Menu, MenuItem } from '@mui/material';
+import {
+    AppBar, Toolbar, Button, Typography, Box, IconButton,
+    Menu, MenuItem, useMediaQuery, useTheme,
+} from '@mui/material';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import { useState } from 'react';
+import MenuRounded from '@mui/icons-material/MenuRounded';
+
+const appLinks = [
+    ['Dashboard', '/dashboard'], ['Compare', '/compare'], ['Problems', '/problems'],
+    ['Contests', '/contests'], ['Bookmarks', '/bookmarks'],
+];
 
 const Navbar = () => {
     const { user, logout } = useAuth();
     const navigate = useNavigate();
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
     const [anchorEl, setAnchorEl] = useState(null);
-
-    const handleMenu = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-
+    const closeMenu = () => setAnchorEl(null);
     const handleLogout = () => {
         logout();
-        handleClose();
+        closeMenu();
         navigate('/login');
     };
 
     return (
-        <AppBar position="static" sx={{ background: 'rgba(30, 41, 59, 0.8)', backdropFilter: 'blur(10px)' }}>
-            <Toolbar>
-                <Typography variant="h6" component={Link} to="/" sx={{ flexGrow: 1, textDecoration: 'none', color: 'white', fontWeight: 'bold' }}>
-                    <span className="gradient-text">CP Analyzer</span>
+        <AppBar position="sticky" elevation={0} className="site-nav">
+            <Toolbar className="site-toolbar">
+                <Typography variant="h6" component={Link} to="/" className="brand-link">
+                    <span className="brand-mark">C</span><span>CP<span className="brand-accent">-Hub</span></span>
                 </Typography>
 
                 {user ? (
-                    <Box display="flex" alignItems="center" gap={2}>
-                        <Button color="inherit" component={Link} to="/dashboard">Dashboard</Button>
-                        <Button color="inherit" component={Link} to="/compare">Compare</Button>
-                        <Button color="inherit" component={Link} to="/problems">Problems</Button>
-                        <Button color="inherit" component={Link} to="/contests">Contests</Button>
-                        <Button color="inherit" component={Link} to="/bookmarks">Bookmarks</Button>
-
-                        <IconButton
-                            size="large"
-                            aria-label="account of current user"
-                            aria-controls="menu-appbar"
-                            aria-haspopup="true"
-                            onClick={handleMenu}
-                            color="inherit"
-                        >
-                            <AccountCircle />
+                    <>
+                        {!isMobile && <Box className="nav-links">{appLinks.map(([label, path]) => <Button key={path} color="inherit" component={Link} to={path}>{label}</Button>)}</Box>}
+                        <IconButton color="inherit" aria-label="Open account menu" onClick={(event) => setAnchorEl(event.currentTarget)}>
+                            {isMobile ? <MenuRounded /> : <AccountCircle />}
                         </IconButton>
-                        <Menu
-                            id="menu-appbar"
-                            anchorEl={anchorEl}
-                            anchorOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            open={Boolean(anchorEl)}
-                            onClose={handleClose}
-                            PaperProps={{
-                                sx: {
-                                    backgroundColor: 'rgba(30, 41, 59, 0.95)',
-                                    backdropFilter: 'blur(10px)',
-                                    border: '1px solid rgba(255,255,255,0.1)',
-                                }
-                            }}
-                        >
-                            <MenuItem disabled sx={{ color: 'rgba(255,255,255,0.7)' }}>{user.username}</MenuItem>
-                            <MenuItem 
-                                onClick={() => { handleClose(); navigate('/profile'); }}
-                                sx={{ color: 'white', '&:hover': { backgroundColor: 'rgba(99, 102, 241, 0.2)' } }}
-                            >
-                                Profile
-                            </MenuItem>
-                            <MenuItem 
-                                onClick={handleLogout}
-                                sx={{ color: 'white', '&:hover': { backgroundColor: 'rgba(239, 68, 68, 0.2)' } }}
-                            >
-                                Logout
-                            </MenuItem>
+                        <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={closeMenu}>
+                            {isMobile && appLinks.map(([label, path]) => <MenuItem key={path} component={Link} to={path} onClick={closeMenu}>{label}</MenuItem>)}
+                            <MenuItem disabled>{user.username}</MenuItem>
+                            <MenuItem component={Link} to="/profile" onClick={closeMenu}>Profile</MenuItem>
+                            <MenuItem onClick={handleLogout}>Log out</MenuItem>
                         </Menu>
-                    </Box>
+                    </>
                 ) : (
-                    <Box>
-                        <Button color="inherit" component={Link} to="/login">Login</Button>
-                        <Button color="inherit" component={Link} to="/register" variant="outlined" sx={{ ml: 1 }}>Register</Button>
+                    <Box className="nav-actions">
+                        {!isMobile && <Button color="inherit" href="/#features">Features</Button>}
+                        <Button color="inherit" component={Link} to="/login">Log in</Button>
+                        <Button component={Link} to="/register" variant="contained" size="small">Get started</Button>
                     </Box>
                 )}
             </Toolbar>

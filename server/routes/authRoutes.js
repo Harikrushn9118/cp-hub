@@ -14,6 +14,9 @@ const generateToken = (id) => {
 };
 
 const verifyGoogleToken = async (token) => {
+    if (!process.env.GOOGLE_CLIENT_ID) {
+        throw new Error('Google sign-in is not configured on the server');
+    }
     try {
         const ticket = await client.verifyIdToken({
             idToken: token,
@@ -140,8 +143,8 @@ router.post('/google', async (req, res) => {
         // Verify Google token
         const googleUser = await verifyGoogleToken(token);
 
-        if (!googleUser.email || !googleUser.sub) {
-            return res.status(400).json({ error: 'Invalid Google account information' });
+        if (!googleUser.email || !googleUser.sub || !googleUser.email_verified) {
+            return res.status(401).json({ error: 'Google account email must be verified' });
         }
 
         let user = await prisma.user.findFirst({
@@ -198,7 +201,8 @@ router.post('/google', async (req, res) => {
         });
     } catch (error) {
         console.error('Google OAuth error:', error);
-        res.status(500).json({ error: error.message || 'Error with Google authentication' });
+        const status = error.message === 'Invalid Google token' ? 401 : 500;
+        res.status(status).json({ error: error.message || 'Error with Google authentication' });
     }
 });
 

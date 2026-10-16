@@ -11,6 +11,7 @@ import BookmarkIcon from '@mui/icons-material/Bookmark';
 import SearchIcon from '@mui/icons-material/Search';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { motion, AnimatePresence } from 'framer-motion';
+import { API_BASE_URL } from '../config/api';
 
 // Common Codeforces tags
 const POPULAR_TAGS = [
@@ -74,7 +75,7 @@ const Problems = () => {
     const fetchBookmarks = async () => {
         try {
             const token = localStorage.getItem('token');
-            const res = await axios.get(`${import.meta.env.VITE_API_URL}/users/bookmarks`, {
+            const res = await axios.get(`${API_BASE_URL}/users/bookmarks`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             const bookmarkedIds = new Set(res.data.map(b => b.problem_id));
@@ -90,7 +91,7 @@ const Problems = () => {
         if (!user?.codeforces_handle) return;
 
         try {
-            const res = await axios.get(`${import.meta.env.VITE_API_URL}/cf/user/${user.codeforces_handle}/status`);
+            const res = await axios.get(`${API_BASE_URL}/cf/user/${user.codeforces_handle}/status`);
             if (res.data && Array.isArray(res.data)) {
                 const solved = new Set();
                 res.data.forEach(submission => {
@@ -110,7 +111,7 @@ const Problems = () => {
         setLoading(true);
         setError('');
         try {
-            const res = await axios.get(`${import.meta.env.VITE_API_URL}/cf/problems`);
+            const res = await axios.get(`${API_BASE_URL}/cf/problems`);
             if (res.data && res.data.problems) {
                 setAllProblems(res.data.problems);
                 setProblemStats(res.data.problemStatistics || []);
@@ -146,7 +147,7 @@ const Problems = () => {
             if (isBookmarked) {
                 const bookmarkId = bookmarkMap.get(problemId);
                 if (bookmarkId) {
-                    await axios.delete(`${import.meta.env.VITE_API_URL}/users/bookmarks/${bookmarkId}`, {
+                    await axios.delete(`${API_BASE_URL}/users/bookmarks/${bookmarkId}`, {
                         headers: { Authorization: `Bearer ${token}` }
                     });
                     setBookmarks(prev => {
@@ -161,7 +162,7 @@ const Problems = () => {
                     });
                 }
             } else {
-                const res = await axios.post(`${import.meta.env.VITE_API_URL}/users/bookmarks`, {
+                const res = await axios.post(`${API_BASE_URL}/users/bookmarks`, {
                     problem_id: problemId,
                     problem_name: problem.name,
                     rating: problem.rating,

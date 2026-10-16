@@ -1,14 +1,14 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
+dotenv.config();
+
 const prisma = require('./config/db');
 
 // Import Routes
 const authRoutes = require('./routes/authRoutes');
 const cfRoutes = require('./routes/cfRoutes');
 const userRoutes = require('./routes/userRoutes');
-
-dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5001;

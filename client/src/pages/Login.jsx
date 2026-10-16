@@ -9,8 +9,8 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import EmailIcon from '@mui/icons-material/Email';
 import LockIcon from '@mui/icons-material/Lock';
-import GoogleIcon from '@mui/icons-material/Google';
 import { motion } from 'framer-motion';
+import GoogleSignInButton from '../components/GoogleSignInButton';
 
 const Login = () => {
     const [identifier, setIdentifier] = useState('');
@@ -18,7 +18,7 @@ const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
-    const { login, googleLogin, user } = useAuth();
+    const { login, loginWithGoogle, user } = useAuth();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -27,28 +27,14 @@ const Login = () => {
         }
     }, [user, navigate]);
 
-    // Initialize Google Sign-In
-    useEffect(() => {
-        /* global google */
-        if (window.google) {
-            google.accounts.id.initialize({
-                client_id: "YOUR_GOOGLE_CLIENT_ID", // Replace with actual Client ID
-                callback: handleGoogleResponse
-            });
-            google.accounts.id.renderButton(
-                document.getElementById("googleSignInDiv"),
-                { theme: "filled_black", size: "large", width: "100%" }
-            );
-        }
-    }, []);
-
-    const handleGoogleResponse = async (response) => {
+    const handleGoogleCredential = async (credential) => {
         try {
+            setError('');
             setLoading(true);
-            await googleLogin(response.credential);
+            await loginWithGoogle(credential);
             navigate('/dashboard');
         } catch (err) {
-            setError(err.response?.data?.message || 'Google login failed');
+            setError(err.response?.data?.error || err.response?.data?.message || err.message || 'Google login failed');
         } finally {
             setLoading(false);
         }
@@ -64,7 +50,7 @@ const Login = () => {
             await login(isEmail ? identifier : undefined, password, !isEmail ? identifier : undefined);
             navigate('/dashboard');
         } catch (err) {
-            setError(err.response?.data?.message || 'Failed to login');
+            setError(err.response?.data?.error || err.response?.data?.message || 'Failed to login');
         } finally {
             setLoading(false);
         }
@@ -185,7 +171,7 @@ const Login = () => {
 
                     <Divider sx={{ my: 2, borderColor: 'rgba(255,255,255,0.1)' }}>OR</Divider>
 
-                    <Box id="googleSignInDiv" sx={{ width: '100%', display: 'flex', justifyContent: 'center', mb: 2 }}></Box>
+                    <GoogleSignInButton onCredential={handleGoogleCredential} disabled={loading} />
 
                     <Typography align="center" sx={{ color: '#94a3b8', mt: 2 }}>
                         Don't have an account?{' '}

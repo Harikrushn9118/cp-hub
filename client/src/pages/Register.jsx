@@ -12,6 +12,7 @@ import LockIcon from '@mui/icons-material/Lock';
 import PersonIcon from '@mui/icons-material/Person';
 import CodeIcon from '@mui/icons-material/Code';
 import { motion } from 'framer-motion';
+import GoogleSignInButton from '../components/GoogleSignInButton';
 
 const Register = () => {
     const [username, setUsername] = useState('');
@@ -21,7 +22,7 @@ const Register = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
-    const { register, googleLogin, user } = useAuth();
+    const { register, loginWithGoogle, user } = useAuth();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -30,28 +31,14 @@ const Register = () => {
         }
     }, [user, navigate]);
 
-    // Initialize Google Sign-In
-    useEffect(() => {
-        /* global google */
-        if (window.google) {
-            google.accounts.id.initialize({
-                client_id: "YOUR_GOOGLE_CLIENT_ID", // Replace with actual Client ID
-                callback: handleGoogleResponse
-            });
-            google.accounts.id.renderButton(
-                document.getElementById("googleSignUpDiv"),
-                { theme: "filled_black", size: "large", width: "100%" }
-            );
-        }
-    }, []);
-
-    const handleGoogleResponse = async (response) => {
+    const handleGoogleCredential = async (credential) => {
         try {
+            setError('');
             setLoading(true);
-            await googleLogin(response.credential);
+            await loginWithGoogle(credential);
             navigate('/dashboard');
         } catch (err) {
-            setError(err.response?.data?.message || 'Google signup failed');
+            setError(err.response?.data?.error || err.response?.data?.message || err.message || 'Google signup failed');
         } finally {
             setLoading(false);
         }
@@ -65,7 +52,7 @@ const Register = () => {
             await register(username, email, password, cfHandle);
             navigate('/dashboard');
         } catch (err) {
-            setError(err.response?.data?.message || 'Failed to register');
+            setError(err.response?.data?.error || err.response?.data?.message || 'Failed to register');
         } finally {
             setLoading(false);
         }
@@ -235,7 +222,7 @@ const Register = () => {
 
                     <Divider sx={{ my: 2, borderColor: 'rgba(255,255,255,0.1)' }}>OR</Divider>
 
-                    <Box id="googleSignUpDiv" sx={{ width: '100%', display: 'flex', justifyContent: 'center', mb: 2 }}></Box>
+                    <GoogleSignInButton onCredential={handleGoogleCredential} disabled={loading} />
 
                     <Typography align="center" sx={{ color: '#94a3b8', mt: 2 }}>
                         Already have an account?{' '}

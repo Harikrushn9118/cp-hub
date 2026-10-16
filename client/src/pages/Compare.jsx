@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
+import { API_BASE_URL } from '../config/api';
 import {
     Box, TextField, Button, Typography, Grid, Paper, CircularProgress,
     Alert, CardContent, Avatar, Chip
@@ -28,12 +29,12 @@ const Compare = () => {
         setError('');
         try {
             const [u1, u2, r1, r2, s1, s2] = await Promise.all([
-                axios.get(`${import.meta.env.VITE_API_URL}/cf/user/${handle1}`),
-                axios.get(`${import.meta.env.VITE_API_URL}/cf/user/${handle2}`),
-                axios.get(`${import.meta.env.VITE_API_URL}/cf/user/${handle1}/rating`),
-                axios.get(`${import.meta.env.VITE_API_URL}/cf/user/${handle2}/rating`),
-                axios.get(`${import.meta.env.VITE_API_URL}/cf/user/${handle1}/status`).catch(() => ({ data: [] })),
-                axios.get(`${import.meta.env.VITE_API_URL}/cf/user/${handle2}/status`).catch(() => ({ data: [] }))
+                axios.get(`${API_BASE_URL}/cf/user/${handle1}`),
+                axios.get(`${API_BASE_URL}/cf/user/${handle2}`),
+                axios.get(`${API_BASE_URL}/cf/user/${handle1}/rating`),
+                axios.get(`${API_BASE_URL}/cf/user/${handle2}/rating`),
+                axios.get(`${API_BASE_URL}/cf/user/${handle1}/status`).catch(() => ({ data: [] })),
+                axios.get(`${API_BASE_URL}/cf/user/${handle2}/status`).catch(() => ({ data: [] }))
             ]);
             setData1(u1.data);
             setData2(u2.data);

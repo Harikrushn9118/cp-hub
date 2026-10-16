@@ -10,6 +10,7 @@ import EmailIcon from '@mui/icons-material/Email';
 import CodeIcon from '@mui/icons-material/Code';
 import SaveIcon from '@mui/icons-material/Save';
 import axios from 'axios';
+import { API_BASE_URL } from '../config/api';
 
 const Profile = () => {
     const { user, updateUser } = useAuth();
@@ -29,7 +30,7 @@ const Profile = () => {
             // Update user profile via API
             const token = localStorage.getItem('token');
             const res = await axios.put(
-                `${import.meta.env.VITE_API_URL}/users/profile`,
+                `${API_BASE_URL}/users/profile`,
                 { email, codeforces_handle: cfHandle },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -71,7 +72,7 @@ const Profile = () => {
                                 {user?.username}
                             </Typography>
                             <Typography variant="body1" color="text.secondary">
-                                Member since {new Date(user?.created_at).toLocaleDateString()}
+                                Member since {user?.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'Recently'}
                             </Typography>
                         </Box>
                     </Box>

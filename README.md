@@ -1,6 +1,6 @@
 # CP-Hub 🚀
 
-**Competitive Programming Companion & Analytics Dashboard**
+**CP-Hub — Competitive Programming Companion & Analytics Dashboard**
 
 CP-Hub is a full-stack web application that helps users track and analyze their competitive programming progress. It integrates the **Codeforces API** with a custom **Node.js + PostgreSQL backend** to provide user comparisons, problem tracking, and near real-time contest updates through an interactive dashboard.
 
@@ -105,7 +105,9 @@ cp-hub/
 
 ## 🔌 Quick Start
 
-> **Note:** Ensure you create a `.env` file in the `server` directory with `DATABASE_URL`, `JWT_SECRET`, and `GOOGLE_CLIENT_ID` before starting.
+Create `server/.env` from `server/.env.example` and set `DATABASE_URL`, a strong `JWT_SECRET`, and the Google OAuth web client ID. Create `client/.env` from `client/.env.example`; set `VITE_API_URL` to the backend origin (for example `http://localhost:5001`) and use the same OAuth web client ID for `VITE_GOOGLE_CLIENT_ID`. The client adds `/api` to the configured backend origin automatically.
+
+In Google Cloud Console, configure the OAuth client as a **Web application** and add the frontend's local and deployed origins to **Authorized JavaScript origins**. Add the deployed frontend origin as well as `http://localhost:5173` during local development. Keep the OAuth client ID public; never put the client secret in the frontend.
 
 ```bash
 # 1. Clone Repository
@@ -122,6 +124,8 @@ cd ../client
 npm install
 npm run dev
 ```
+
+Open the frontend at `http://localhost:5173`. The landing page explains the public features; sign in or create an account to access the personalized tools. Google sign-in requires a matching `GOOGLE_CLIENT_ID` on the server and `VITE_GOOGLE_CLIENT_ID` on the client.
 
 ---
 
