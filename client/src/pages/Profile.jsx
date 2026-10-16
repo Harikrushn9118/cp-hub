@@ -77,7 +77,7 @@ const Profile = () => {
                         </Box>
                     </Box>
 
-                    <Divider sx={{ my: 3, borderColor: 'rgba(255,255,255,0.1)' }} />
+                    <Divider sx={{ my: 3, borderColor: 'var(--card-border)' }} />
 
                     {success && <Alert severity="success" sx={{ mb: 3 }}>{success}</Alert>}
                     {error && <Alert severity="error" sx={{ mb: 3 }}>{error}</Alert>}
@@ -95,7 +95,7 @@ const Profile = () => {
                                     }}
                                     sx={{
                                         '& .MuiInputBase-input.Mui-disabled': {
-                                            WebkitTextFillColor: 'rgba(255,255,255,0.5)',
+                                            WebkitTextFillColor: 'var(--text-secondary)',
                                         }
                                     }}
                                 />

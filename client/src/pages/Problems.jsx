@@ -37,7 +37,7 @@ const RATING_RANGES = [
 ];
 
 const getRatingColor = (rating) => {
-    if (!rating) return '#94a3b8';
+    if (!rating) return 'var(--text-secondary)';
     if (rating < 1200) return '#808080';
     if (rating < 1400) return '#008000';
     if (rating < 1600) return '#03a89e';
@@ -258,7 +258,7 @@ const Problems = () => {
                 <Grid container spacing={2} sx={{ mt: 2 }}>
                     {[...Array(6)].map((_, i) => (
                         <Grid item xs={12} md={6} lg={4} key={i}>
-                            <Skeleton variant="rectangular" height={200} sx={{ borderRadius: 2, bgcolor: 'rgba(255,255,255,0.05)' }} />
+                            <Skeleton variant="rectangular" height={200} sx={{ borderRadius: 2, bgcolor: 'var(--surface-hover)' }} />
                         </Grid>
                     ))}
                 </Grid>
@@ -272,7 +272,7 @@ const Problems = () => {
                 Problem Recommender
             </Typography>
 
-            <Paper className="glass-card" sx={{ p: 3, mb: 3, backgroundColor: 'rgba(30, 41, 59, 0.8)', border: '1px solid rgba(255,255,255,0.1)' }}>
+            <Paper className="glass-card" sx={{ p: 3, mb: 3, backgroundColor: 'var(--surface-card)', border: '1px solid var(--card-border)' }}>
                 <Stack spacing={3}>
                     <TextField
                         fullWidth
@@ -283,19 +283,19 @@ const Problems = () => {
                         InputProps={{
                             startAdornment: (
                                 <InputAdornment position="start">
-                                    <SearchIcon sx={{ color: 'rgba(255,255,255,0.6)' }} />
+                                    <SearchIcon sx={{ color: 'var(--text-secondary)' }} />
                                 </InputAdornment>
                             ),
                         }}
                         sx={{
                             '& .MuiOutlinedInput-root': {
-                                backgroundColor: 'rgba(15, 23, 42, 0.6)',
-                                color: '#ffffff',
-                                '& fieldset': { borderColor: 'rgba(255,255,255,0.3)' },
-                                '&:hover fieldset': { borderColor: 'rgba(99, 102, 241, 0.6)' },
+                                backgroundColor: 'var(--surface-inset)',
+                                color: 'var(--text-primary)',
+                                '& fieldset': { borderColor: 'var(--card-border-strong)' },
+                                '&:hover fieldset': { borderColor: 'var(--primary-color)' },
                                 '&.Mui-focused fieldset': { borderColor: 'var(--primary-color)' },
                             },
-                            '& .MuiInputBase-input': { color: '#ffffff' }
+                            '& .MuiInputBase-input': { color: 'var(--text-primary)' }
                         }}
                     />
 
@@ -307,12 +307,12 @@ const Problems = () => {
                                     onChange={(e) => setShowOnlySolved(e.target.checked)}
                                 />
                             }
-                            label={<Typography sx={{ color: '#e2e8f0' }}>Show My Solved Problems Only</Typography>}
+                            label={<Typography sx={{ color: 'var(--text-primary)' }}>Show My Solved Problems Only</Typography>}
                         />
                     )}
 
                     <Box>
-                        <Typography variant="subtitle2" sx={{ mb: 1.5, color: '#e2e8f0', fontWeight: 600 }}>
+                        <Typography variant="subtitle2" sx={{ mb: 1.5, color: 'var(--text-primary)', fontWeight: 600 }}>
                             Select Rating Range
                         </Typography>
                         <ToggleButtonGroup
@@ -331,9 +331,9 @@ const Problems = () => {
                                     key={range.label}
                                     value={range.label}
                                     sx={{
-                                        color: '#cbd5e1',
-                                        borderColor: 'rgba(255,255,255,0.3)',
-                                        '&.Mui-selected': { backgroundColor: 'var(--primary-color)', color: '#fff' }
+                                        color: 'var(--text-muted)',
+                                        borderColor: 'var(--card-border-strong)',
+                                        '&.Mui-selected': { backgroundColor: 'var(--primary-color)', color: 'var(--text-on-primary)' }
                                     }}
                                 >
                                     {range.label}
@@ -343,7 +343,7 @@ const Problems = () => {
                     </Box>
 
                     <Box>
-                        <Typography variant="subtitle2" sx={{ mb: 1.5, color: '#e2e8f0', fontWeight: 600 }}>
+                        <Typography variant="subtitle2" sx={{ mb: 1.5, color: 'var(--text-primary)', fontWeight: 600 }}>
                             Select Topics
                         </Typography>
                         <Box display="flex" flexWrap="wrap" gap={1}>
@@ -355,8 +355,8 @@ const Problems = () => {
                                         label={tag}
                                         onClick={() => toggleTag(tag)}
                                         sx={{
-                                            backgroundColor: isSelected ? 'var(--primary-color)' : 'rgba(15, 23, 42, 0.6)',
-                                            color: isSelected ? '#ffffff' : '#cbd5e1',
+                                            backgroundColor: isSelected ? 'var(--primary-color)' : 'var(--surface-inset)',
+                                            color: isSelected ? 'var(--text-on-primary)' : 'var(--text-muted)',
                                             cursor: 'pointer',
                                         }}
                                     />
@@ -367,12 +367,12 @@ const Problems = () => {
 
                     <Box display="flex" justifyContent="space-between" alignItems="center" flexWrap="wrap" gap={2}>
                         <FormControl size="small" sx={{ minWidth: 180 }}>
-                            <InputLabel sx={{ color: '#cbd5e1' }}>Sort By</InputLabel>
+                            <InputLabel sx={{ color: 'var(--text-muted)' }}>Sort By</InputLabel>
                             <Select
                                 value={sortBy}
                                 onChange={(e) => setSortBy(e.target.value)}
                                 label="Sort By"
-                                sx={{ color: '#ffffff', '& .MuiOutlinedInput-notchedOutline': { borderColor: 'rgba(255,255,255,0.3)' } }}
+                                sx={{ color: 'var(--text-primary)', '& .MuiOutlinedInput-notchedOutline': { borderColor: 'var(--card-border-strong)' } }}
                             >
                                 <MenuItem value="solved">Most Solved</MenuItem>
                                 <MenuItem value="rating-asc">Rating (Low to High)</MenuItem>
@@ -381,7 +381,7 @@ const Problems = () => {
                                 <MenuItem value="contest">Contest ID</MenuItem>
                             </Select>
                         </FormControl>
-                        <Typography variant="body2" sx={{ color: '#cbd5e1' }}>
+                        <Typography variant="body2" sx={{ color: 'var(--text-muted)' }}>
                             Showing {filteredProblems.length} of {allProblems.length} problems
                         </Typography>
                     </Box>
@@ -394,7 +394,7 @@ const Problems = () => {
                 <CircularProgress />
             ) : filteredProblems.length === 0 ? (
                 <Paper className="glass-card" sx={{ p: 4, textAlign: 'center' }}>
-                    <Typography variant="h6" sx={{ color: '#cbd5e1' }}>No problems found.</Typography>
+                    <Typography variant="h6" sx={{ color: 'var(--text-muted)' }}>No problems found.</Typography>
                 </Paper>
             ) : (
                 <Grid container spacing={2}>
@@ -417,23 +417,23 @@ const Problems = () => {
                                                 height: '100%',
                                                 display: 'flex',
                                                 flexDirection: 'column',
-                                                border: isSolved ? '2px solid #10b981' : '1px solid rgba(255,255,255,0.1)',
+                                                border: isSolved ? '2px solid #10b981' : '1px solid var(--card-border)',
                                             }}
                                         >
                                             <Box display="flex" justifyContent="space-between" mb={1.5}>
                                                 <Box flex={1}>
-                                                    <Typography variant="h6" fontWeight="bold" color="#fff">
+                                                    <Typography variant="h6" fontWeight="bold" color="var(--text-primary)">
                                                         {problem.index}. {problem.name}
                                                     </Typography>
                                                     {isSolved && <Chip label="Solved" size="small" color="success" variant="outlined" />}
                                                 </Box>
-                                                <IconButton onClick={() => toggleBookmark(problem)} sx={{ color: isBookmarked ? '#fbbf24' : 'rgba(255,255,255,0.5)' }}>
+                                                <IconButton onClick={() => toggleBookmark(problem)} sx={{ color: isBookmarked ? '#fbbf24' : 'var(--text-secondary)' }}>
                                                     {isBookmarked ? <BookmarkIcon /> : <BookmarkBorderIcon />}
                                                 </IconButton>
                                             </Box>
                                             <Box mb={2} display="flex" flexWrap="wrap" gap={0.5}>
                                                 {problem.tags?.slice(0, 3).map(t => (
-                                                    <Chip key={t} label={t} size="small" sx={{ bgcolor: 'rgba(15, 23, 42, 0.6)', color: '#cbd5e1' }} />
+                                                    <Chip key={t} label={t} size="small" sx={{ bgcolor: 'var(--surface-inset)', color: 'var(--text-muted)' }} />
                                                 ))}
                                             </Box>
                                             <Box display="flex" justifyContent="space-between" alignItems="center" mt="auto">
@@ -441,7 +441,7 @@ const Problems = () => {
                                                     <Typography fontWeight="bold" sx={{ color: ratingColor }}>
                                                         {problem.rating ? `Rating: ${problem.rating}` : 'N/A'}
                                                     </Typography>
-                                                    <Typography variant="caption" color="#94a3b8">
+                                                    <Typography variant="caption" color="var(--text-secondary)">
                                                         {solvedCount.toLocaleString()} solved
                                                     </Typography>
                                                 </Box>

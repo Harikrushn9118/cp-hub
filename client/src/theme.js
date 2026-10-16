@@ -2,22 +2,22 @@ import { createTheme } from '@mui/material/styles';
 
 const paletteByMode = {
     dark: {
-        background: { default: '#0f172a', paper: '#1e293b' },
-        text: { primary: '#f8fafc', secondary: '#94a3b8' },
-        divider: 'rgba(255, 255, 255, 0.14)',
+        background: { default: '#0a111b', paper: '#111d2a' },
+        text: { primary: '#edf5f7', secondary: '#9aadb5' },
+        divider: 'rgba(203, 224, 230, 0.13)',
     },
     light: {
-        background: { default: '#f3f6fc', paper: '#ffffff' },
-        text: { primary: '#172033', secondary: '#5d6b83' },
-        divider: 'rgba(23, 32, 51, 0.16)',
+        background: { default: '#f2f7f7', paper: '#ffffff' },
+        text: { primary: '#142a31', secondary: '#577078' },
+        divider: 'rgba(20, 42, 49, 0.14)',
     },
 };
 
 const createAppTheme = (mode = 'dark') => createTheme({
     palette: {
         mode,
-        primary: { main: mode === 'dark' ? '#6366f1' : '#4f46e5' },
-        secondary: { main: '#a855f7' },
+        primary: { main: mode === 'dark' ? '#2dd4bf' : '#0f766e' },
+        secondary: { main: mode === 'dark' ? '#38bdf8' : '#0369a1' },
         ...paletteByMode[mode],
     },
     typography: {
@@ -30,15 +30,15 @@ const createAppTheme = (mode = 'dark') => createTheme({
         MuiOutlinedInput: {
             styleOverrides: {
                 root: {
-                    '& fieldset': { borderColor: mode === 'dark' ? 'rgba(255, 255, 255, 0.23)' : 'rgba(23, 32, 51, 0.24)' },
-                    '&:hover fieldset': { borderColor: mode === 'dark' ? '#6366f1' : '#4f46e5' },
-                    '&.Mui-focused fieldset': { borderColor: mode === 'dark' ? '#6366f1' : '#4f46e5' },
+                    '& fieldset': { borderColor: paletteByMode[mode].divider },
+                    '&:hover fieldset': { borderColor: mode === 'dark' ? '#2dd4bf' : '#0f766e' },
+                    '&.Mui-focused fieldset': { borderColor: mode === 'dark' ? '#2dd4bf' : '#0f766e' },
                 },
                 input: {
                     '&:-webkit-autofill': {
-                        WebkitBoxShadow: `0 0 0 100px ${mode === 'dark' ? '#1e293b' : '#ffffff'} inset`,
-                        WebkitTextFillColor: mode === 'dark' ? '#f8fafc' : '#172033',
-                        caretColor: mode === 'dark' ? '#f8fafc' : '#172033',
+                        WebkitBoxShadow: `0 0 0 100px ${paletteByMode[mode].background.paper} inset`,
+                        WebkitTextFillColor: paletteByMode[mode].text.primary,
+                        caretColor: paletteByMode[mode].text.primary,
                         borderRadius: 'inherit',
                     },
                 },
@@ -48,7 +48,7 @@ const createAppTheme = (mode = 'dark') => createTheme({
             styleOverrides: {
                 root: {
                     color: paletteByMode[mode].text.secondary,
-                    '&.Mui-focused': { color: mode === 'dark' ? '#818cf8' : '#4f46e5' },
+                    '&.Mui-focused': { color: mode === 'dark' ? '#5eead4' : '#0f766e' },
                 },
             },
         },

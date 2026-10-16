@@ -77,14 +77,14 @@ const Register = () => {
                         p: 4, 
                         width: '100%', 
                         maxWidth: 400,
-                        backgroundColor: 'rgba(30, 41, 59, 0.8)',
-                        border: '1px solid rgba(255,255,255,0.1)'
+                        backgroundColor: 'var(--surface-card)',
+                        border: '1px solid var(--card-border)'
                     }}
                 >
                     <Typography variant="h4" align="center" gutterBottom fontWeight="bold" className="gradient-text">
                         Create Account
                     </Typography>
-                    <Typography variant="body2" align="center" sx={{ color: '#94a3b8', mb: 3 }}>
+                    <Typography variant="body2" align="center" sx={{ color: 'var(--text-secondary)', mb: 3 }}>
                         Join CP Analyzer to track your progress
                     </Typography>
 
@@ -102,17 +102,17 @@ const Register = () => {
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment position="start">
-                                        <PersonIcon sx={{ color: '#94a3b8' }} />
+                                        <PersonIcon sx={{ color: 'var(--text-secondary)' }} />
                                     </InputAdornment>
                                 ),
                             }}
                             sx={{
                                 '& .MuiOutlinedInput-root': {
-                                    color: '#fff',
-                                    '& fieldset': { borderColor: 'rgba(255,255,255,0.2)' },
-                                    '&:hover fieldset': { borderColor: '#6366f1' },
+                                    color: 'var(--text-primary)',
+                                    '& fieldset': { borderColor: 'var(--card-border-strong)' },
+                                    '&:hover fieldset': { borderColor: 'var(--primary-color)' },
                                 },
-                                '& .MuiInputLabel-root': { color: '#94a3b8' },
+                                '& .MuiInputLabel-root': { color: 'var(--text-secondary)' },
                             }}
                         />
                         <TextField
@@ -127,17 +127,17 @@ const Register = () => {
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment position="start">
-                                        <EmailIcon sx={{ color: '#94a3b8' }} />
+                                        <EmailIcon sx={{ color: 'var(--text-secondary)' }} />
                                     </InputAdornment>
                                 ),
                             }}
                             sx={{
                                 '& .MuiOutlinedInput-root': {
-                                    color: '#fff',
-                                    '& fieldset': { borderColor: 'rgba(255,255,255,0.2)' },
-                                    '&:hover fieldset': { borderColor: '#6366f1' },
+                                    color: 'var(--text-primary)',
+                                    '& fieldset': { borderColor: 'var(--card-border-strong)' },
+                                    '&:hover fieldset': { borderColor: 'var(--primary-color)' },
                                 },
-                                '& .MuiInputLabel-root': { color: '#94a3b8' },
+                                '& .MuiInputLabel-root': { color: 'var(--text-secondary)' },
                             }}
                         />
                         <TextField
@@ -150,17 +150,17 @@ const Register = () => {
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment position="start">
-                                        <CodeIcon sx={{ color: '#94a3b8' }} />
+                                        <CodeIcon sx={{ color: 'var(--text-secondary)' }} />
                                     </InputAdornment>
                                 ),
                             }}
                             sx={{
                                 '& .MuiOutlinedInput-root': {
-                                    color: '#fff',
-                                    '& fieldset': { borderColor: 'rgba(255,255,255,0.2)' },
-                                    '&:hover fieldset': { borderColor: '#6366f1' },
+                                    color: 'var(--text-primary)',
+                                    '& fieldset': { borderColor: 'var(--card-border-strong)' },
+                                    '&:hover fieldset': { borderColor: 'var(--primary-color)' },
                                 },
-                                '& .MuiInputLabel-root': { color: '#94a3b8' },
+                                '& .MuiInputLabel-root': { color: 'var(--text-secondary)' },
                             }}
                         />
                         <TextField
@@ -175,7 +175,7 @@ const Register = () => {
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment position="start">
-                                        <LockIcon sx={{ color: '#94a3b8' }} />
+                                        <LockIcon sx={{ color: 'var(--text-secondary)' }} />
                                     </InputAdornment>
                                 ),
                                 endAdornment: (
@@ -183,7 +183,7 @@ const Register = () => {
                                         <IconButton
                                             onClick={() => setShowPassword(!showPassword)}
                                             edge="end"
-                                            sx={{ color: '#94a3b8' }}
+                                            sx={{ color: 'var(--text-secondary)' }}
                                         >
                                             {showPassword ? <VisibilityOff /> : <Visibility />}
                                         </IconButton>
@@ -192,11 +192,11 @@ const Register = () => {
                             }}
                             sx={{
                                 '& .MuiOutlinedInput-root': {
-                                    color: '#fff',
-                                    '& fieldset': { borderColor: 'rgba(255,255,255,0.2)' },
-                                    '&:hover fieldset': { borderColor: '#6366f1' },
+                                    color: 'var(--text-primary)',
+                                    '& fieldset': { borderColor: 'var(--card-border-strong)' },
+                                    '&:hover fieldset': { borderColor: 'var(--primary-color)' },
                                 },
-                                '& .MuiInputLabel-root': { color: '#94a3b8' },
+                                '& .MuiInputLabel-root': { color: 'var(--text-secondary)' },
                             }}
                         />
 
@@ -209,10 +209,10 @@ const Register = () => {
                             sx={{ 
                                 mt: 3, 
                                 mb: 2,
-                                background: 'linear-gradient(to right, #6366f1, #a855f7)',
+                                background: 'linear-gradient(to right, var(--primary-color), var(--secondary-color))',
                                 fontWeight: 'bold',
                                 '&:hover': {
-                                    background: 'linear-gradient(to right, #4f46e5, #9333ea)',
+                                    background: 'linear-gradient(to right, var(--primary-strong), var(--secondary-color))',
                                 }
                             }}
                         >
@@ -220,13 +220,13 @@ const Register = () => {
                         </Button>
                     </form>
 
-                    <Divider sx={{ my: 2, borderColor: 'rgba(255,255,255,0.1)' }}>OR</Divider>
+                    <Divider sx={{ my: 2, borderColor: 'var(--card-border)' }}>OR</Divider>
 
                     <GoogleSignInButton onCredential={handleGoogleCredential} disabled={loading} />
 
-                    <Typography align="center" sx={{ color: '#94a3b8', mt: 2 }}>
+                    <Typography align="center" sx={{ color: 'var(--text-secondary)', mt: 2 }}>
                         Already have an account?{' '}
-                        <Link to="/login" style={{ color: '#6366f1', textDecoration: 'none', fontWeight: 'bold' }}>
+                        <Link to="/login" style={{ color: 'var(--primary-color)', textDecoration: 'none', fontWeight: 'bold' }}>
                             Login
                         </Link>
                     </Typography>

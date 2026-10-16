@@ -105,11 +105,11 @@ const Contests = () => {
                                         alignItems: 'center',
                                         flexWrap: 'wrap',
                                         gap: 2,
-                                        borderLeft: contest.phase === 'CODING' ? '4px solid #10b981' : '4px solid #6366f1'
+                                        borderLeft: contest.phase === 'CODING' ? '4px solid #10b981' : '4px solid var(--primary-color)'
                                     }}
                                 >
                                     <Box>
-                                        <Typography variant="h6" fontWeight="bold" color="#fff">
+                                        <Typography variant="h6" fontWeight="bold" color="var(--text-primary)">
                                             {contest.name}
                                         </Typography>
                                         <Box display="flex" gap={3} mt={1} color="text.secondary">

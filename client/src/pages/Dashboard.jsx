@@ -16,7 +16,7 @@ import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import { API_BASE_URL } from '../config/api';
 
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#6366f1', '#a855f7'];
+const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', 'var(--primary-color)', 'var(--secondary-color)'];
 
 const Dashboard = () => {
     const { user } = useAuth();
@@ -182,23 +182,23 @@ const Dashboard = () => {
                         <Typography variant="h6" gutterBottom>Rating History</Typography>
                         <ResponsiveContainer width="100%" height="100%">
                             <LineChart data={formattedRatingHistory} margin={{ top: 20, right: 30, left: 20, bottom: 40 }}>
-                                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
+                                <CartesianGrid strokeDasharray="3 3" stroke="var(--card-border)" />
                                 <XAxis
                                     dataKey="date"
-                                    stroke="#94a3b8"
+                                    stroke="var(--text-secondary)"
                                     tick={false}
-                                    label={{ value: 'Time', position: 'insideBottom', offset: -5, fill: '#94a3b8' }}
+                                    label={{ value: 'Time', position: 'insideBottom', offset: -5, fill: 'var(--text-secondary)' }}
                                 />
                                 <YAxis
-                                    stroke="#94a3b8"
+                                    stroke="var(--text-secondary)"
                                     domain={['auto', 'auto']}
-                                    label={{ value: 'Rating', angle: -90, position: 'insideLeft', offset: 10, fill: '#94a3b8' }}
+                                    label={{ value: 'Rating', angle: -90, position: 'insideLeft', offset: 10, fill: 'var(--text-secondary)' }}
                                 />
                                 <Tooltip
-                                    contentStyle={{ backgroundColor: '#1e293b', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: '#f8fafc' }}
-                                    itemStyle={{ color: '#f8fafc' }}
+                                    contentStyle={{ backgroundColor: 'var(--surface-card)', border: '1px solid var(--card-border)', borderRadius: '8px', color: 'var(--text-primary)' }}
+                                    itemStyle={{ color: 'var(--text-primary)' }}
                                 />
-                                <Line type="monotone" dataKey="newRating" stroke="#6366f1" strokeWidth={2} dot={false} />
+                                <Line type="monotone" dataKey="newRating" stroke="var(--primary-color)" strokeWidth={2} dot={false} />
                             </LineChart>
                         </ResponsiveContainer>
                     </Paper>
@@ -215,7 +215,7 @@ const Dashboard = () => {
                                 return (
                                     <Box key={idx} sx={{
                                         p: 2,
-                                        bgcolor: 'rgba(255,255,255,0.05)',
+                                        bgcolor: 'var(--surface-hover)',
                                         borderRadius: 2,
                                         display: 'flex',
                                         justifyContent: 'space-between',
@@ -260,8 +260,8 @@ const Dashboard = () => {
                                     ))}
                                 </Pie>
                                 <Tooltip
-                                    contentStyle={{ backgroundColor: '#1e293b', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: '#f8fafc' }}
-                                    itemStyle={{ color: '#f8fafc' }}
+                                    contentStyle={{ backgroundColor: 'var(--surface-card)', border: '1px solid var(--card-border)', borderRadius: '8px', color: 'var(--text-primary)' }}
+                                    itemStyle={{ color: 'var(--text-primary)' }}
                                 />
                                 <Legend />
                             </PieChart>
@@ -274,26 +274,26 @@ const Dashboard = () => {
                         <Typography variant="h6" gutterBottom>Top Tags</Typography>
                         <ResponsiveContainer width="100%" height="100%">
                             <BarChart data={tagsData} margin={{ top: 20, right: 30, left: 20, bottom: 60 }}>
-                                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
+                                <CartesianGrid strokeDasharray="3 3" stroke="var(--card-border)" />
                                 <XAxis
                                     dataKey="name"
-                                    stroke="#94a3b8"
+                                    stroke="var(--text-secondary)"
                                     angle={-45}
                                     textAnchor="end"
                                     interval={0}
                                     height={60}
-                                    label={{ value: 'Topic', position: 'insideBottom', offset: -50, fill: '#94a3b8' }}
+                                    label={{ value: 'Topic', position: 'insideBottom', offset: -50, fill: 'var(--text-secondary)' }}
                                 />
                                 <YAxis
-                                    stroke="#94a3b8"
-                                    label={{ value: 'Count', angle: -90, position: 'insideLeft', offset: 10, fill: '#94a3b8' }}
+                                    stroke="var(--text-secondary)"
+                                    label={{ value: 'Count', angle: -90, position: 'insideLeft', offset: 10, fill: 'var(--text-secondary)' }}
                                 />
                                 <Tooltip
-                                    contentStyle={{ backgroundColor: '#1e293b', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: '#f8fafc' }}
-                                    cursor={{ fill: 'rgba(255,255,255,0.05)' }}
-                                    itemStyle={{ color: '#f8fafc' }}
+                                    contentStyle={{ backgroundColor: 'var(--surface-card)', border: '1px solid var(--card-border)', borderRadius: '8px', color: 'var(--text-primary)' }}
+                                    cursor={{ fill: 'var(--surface-hover)' }}
+                                    itemStyle={{ color: 'var(--text-primary)' }}
                                 />
-                                <Bar dataKey="value" fill="#a855f7" />
+                                <Bar dataKey="value" fill="var(--secondary-color)" />
                             </BarChart>
                         </ResponsiveContainer>
                     </Paper>
@@ -318,23 +318,23 @@ const Dashboard = () => {
                                 })()
                             }
                                 margin={{ top: 20, right: 30, left: 20, bottom: 40 }}>
-                                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
+                                <CartesianGrid strokeDasharray="3 3" stroke="var(--card-border)" />
                                 <XAxis
                                     dataKey="rating"
-                                    stroke="#94a3b8"
+                                    stroke="var(--text-secondary)"
                                     tick={false}
-                                    label={{ value: 'Rating', position: 'insideBottom', offset: -35, fill: '#94a3b8' }}
+                                    label={{ value: 'Rating', position: 'insideBottom', offset: -35, fill: 'var(--text-secondary)' }}
                                 />
                                 <YAxis
-                                    stroke="#94a3b8"
-                                    label={{ value: 'Count', angle: -90, position: 'insideLeft', offset: 10, fill: '#94a3b8' }}
+                                    stroke="var(--text-secondary)"
+                                    label={{ value: 'Count', angle: -90, position: 'insideLeft', offset: 10, fill: 'var(--text-secondary)' }}
                                 />
                                 <Tooltip
-                                    contentStyle={{ backgroundColor: '#1e293b', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: '#f8fafc' }}
-                                    cursor={{ fill: 'rgba(255,255,255,0.05)' }}
-                                    itemStyle={{ color: '#f8fafc' }}
+                                    contentStyle={{ backgroundColor: 'var(--surface-card)', border: '1px solid var(--card-border)', borderRadius: '8px', color: 'var(--text-primary)' }}
+                                    cursor={{ fill: 'var(--surface-hover)' }}
+                                    itemStyle={{ color: 'var(--text-primary)' }}
                                 />
-                                <Bar dataKey="count" fill="#6366f1" name="Solved By Rating" />
+                                <Bar dataKey="count" fill="var(--primary-color)" name="Solved By Rating" />
                             </BarChart>
                         </ResponsiveContainer>
                     </Paper>

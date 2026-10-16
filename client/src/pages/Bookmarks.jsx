@@ -94,7 +94,7 @@ const Bookmarks = () => {
     };
 
     const getRatingColor = (rating) => {
-        if (!rating) return '#94a3b8';
+        if (!rating) return 'var(--text-secondary)';
         if (rating < 1200) return '#808080';
         if (rating < 1400) return '#008000';
         if (rating < 1600) return '#03a89e';
@@ -158,12 +158,12 @@ const Bookmarks = () => {
                                                 height: '100%',
                                                 display: 'flex',
                                                 flexDirection: 'column',
-                                                border: isSolved ? '2px solid #10b981' : '1px solid rgba(255,255,255,0.1)'
+                                                border: isSolved ? '2px solid #10b981' : '1px solid var(--card-border)'
                                             }}
                                         >
                                             <Box display="flex" justifyContent="space-between" mb={1.5}>
                                                 <Box>
-                                                    <Typography variant="h6" fontWeight="bold" color="#fff">
+                                                    <Typography variant="h6" fontWeight="bold" color="var(--text-primary)">
                                                         {bookmark.problem_name || bookmark.problem_id}
                                                     </Typography>
                                                     {isSolved && (
@@ -183,7 +183,7 @@ const Bookmarks = () => {
                                             </Box>
                                             <Box mb={2} display="flex" flexWrap="wrap" gap={0.5}>
                                                 {bookmark.tags?.map((tag, idx) => (
-                                                    <Chip key={idx} label={tag} size="small" sx={{ bgcolor: 'rgba(255,255,255,0.1)', color: '#cbd5e1' }} />
+                                                    <Chip key={idx} label={tag} size="small" sx={{ bgcolor: 'var(--card-border)', color: 'var(--text-muted)' }} />
                                                 ))}
                                             </Box>
                                             <Box display="flex" justifyContent="space-between" alignItems="center" mt="auto">

@@ -154,8 +154,8 @@ const Compare = () => {
                                 onChange={(e) => setHandle1(e.target.value)}
                                 sx={{
                                     '& .MuiOutlinedInput-root': {
-                                        '& fieldset': { borderColor: 'rgba(255,255,255,0.2)' },
-                                        '&:hover fieldset': { borderColor: '#6366f1' },
+                                        '& fieldset': { borderColor: 'var(--card-border-strong)' },
+                                        '&:hover fieldset': { borderColor: 'var(--primary-color)' },
                                     }
                                 }}
                             />
@@ -172,8 +172,8 @@ const Compare = () => {
                                 onChange={(e) => setHandle2(e.target.value)}
                                 sx={{
                                     '& .MuiOutlinedInput-root': {
-                                        '& fieldset': { borderColor: 'rgba(255,255,255,0.2)' },
-                                        '&:hover fieldset': { borderColor: '#a855f7' },
+                                        '& fieldset': { borderColor: 'var(--card-border-strong)' },
+                                        '&:hover fieldset': { borderColor: 'var(--secondary-color)' },
                                     }
                                 }}
                             />
@@ -186,7 +186,7 @@ const Compare = () => {
                                 size="large"
                                 disabled={loading}
                                 sx={{
-                                    background: 'linear-gradient(to right, #6366f1, #a855f7)',
+                                    background: 'linear-gradient(to right, var(--primary-color), var(--secondary-color))',
                                     py: 1.5,
                                     fontSize: '1.1rem',
                                     fontWeight: 'bold'
@@ -208,11 +208,11 @@ const Compare = () => {
                         <Paper className="glass-card" sx={{ p: 4, width: '100%', maxWidth: 350, textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
                             <Box sx={{
                                 position: 'absolute', top: 0, left: 0, right: 0, height: 4,
-                                background: '#6366f1'
+                                background: 'var(--primary-color)'
                             }} />
-                            <Avatar src={data1.titlePhoto} sx={{ width: 120, height: 120, mx: 'auto', mb: 2, border: '4px solid #6366f1' }} />
+                            <Avatar src={data1.titlePhoto} sx={{ width: 120, height: 120, mx: 'auto', mb: 2, border: '4px solid var(--primary-color)' }} />
                             <Typography variant="h4" fontWeight="bold">{data1.handle}</Typography>
-                            <Chip label={data1.rank} sx={{ mt: 1, bgcolor: '#6366f1', color: 'white', fontWeight: 'bold' }} />
+                            <Chip label={data1.rank} sx={{ mt: 1, bgcolor: 'var(--primary-color)', color: 'var(--text-on-primary)', fontWeight: 'bold' }} />
                         </Paper>
 
                         <Typography variant="h3" fontWeight="900" className="gradient-text">VS</Typography>
@@ -221,11 +221,11 @@ const Compare = () => {
                         <Paper className="glass-card" sx={{ p: 4, width: '100%', maxWidth: 350, textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
                             <Box sx={{
                                 position: 'absolute', top: 0, left: 0, right: 0, height: 4,
-                                background: '#a855f7'
+                                background: 'var(--secondary-color)'
                             }} />
-                            <Avatar src={data2.titlePhoto} sx={{ width: 120, height: 120, mx: 'auto', mb: 2, border: '4px solid #a855f7' }} />
+                            <Avatar src={data2.titlePhoto} sx={{ width: 120, height: 120, mx: 'auto', mb: 2, border: '4px solid var(--secondary-color)' }} />
                             <Typography variant="h4" fontWeight="bold">{data2.handle}</Typography>
-                            <Chip label={data2.rank} sx={{ mt: 1, bgcolor: '#a855f7', color: 'white', fontWeight: 'bold' }} />
+                            <Chip label={data2.rank} sx={{ mt: 1, bgcolor: 'var(--secondary-color)', color: 'var(--text-on-secondary)', fontWeight: 'bold' }} />
                         </Paper>
                     </Box>
 
@@ -247,12 +247,12 @@ const Compare = () => {
                                     alignItems: 'center',
                                     justifyContent: 'space-between',
                                     p: 3,
-                                    borderBottom: idx !== comparisonData.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none',
-                                    '&:hover': { bgcolor: 'rgba(255,255,255,0.02)' }
+                                    borderBottom: idx !== comparisonData.length - 1 ? '1px solid var(--card-border)' : 'none',
+                                    '&:hover': { bgcolor: 'var(--surface-hover)' }
                                 }}>
                                     {/* User 1 Value */}
                                     <Box flex={1} textAlign="right">
-                                        <Typography variant="h5" fontWeight="bold" color={user1Wins ? '#6366f1' : 'text.secondary'}>
+                                        <Typography variant="h5" fontWeight="bold" color={user1Wins ? 'var(--primary-color)' : 'text.secondary'}>
                                             {item.user1}
                                         </Typography>
                                     </Box>
@@ -265,8 +265,8 @@ const Compare = () => {
                                                 label={`${Math.abs(diffVal)} ${user1Wins ? 'Higher' : 'Lower'}`}
                                                 size="small"
                                                 sx={{
-                                                    bgcolor: user1Wins ? 'rgba(99, 102, 241, 0.1)' : 'rgba(168, 85, 247, 0.1)',
-                                                    color: user1Wins ? '#6366f1' : '#a855f7',
+                                                    bgcolor: user1Wins ? 'var(--surface-hover)' : 'var(--surface-hover)',
+                                                    color: user1Wins ? 'var(--primary-color)' : 'var(--secondary-color)',
                                                     fontWeight: 'bold',
                                                     height: 20,
                                                     fontSize: '0.7rem'
@@ -277,7 +277,7 @@ const Compare = () => {
 
                                     {/* User 2 Value */}
                                     <Box flex={1} textAlign="left">
-                                        <Typography variant="h5" fontWeight="bold" color={user2Wins ? '#a855f7' : 'text.secondary'}>
+                                        <Typography variant="h5" fontWeight="bold" color={user2Wins ? 'var(--secondary-color)' : 'text.secondary'}>
                                             {item.user2}
                                         </Typography>
                                     </Box>
@@ -291,24 +291,24 @@ const Compare = () => {
                         <Typography variant="h5" gutterBottom fontWeight="bold" textAlign="center">Rating Trajectory</Typography>
                         <ResponsiveContainer width="100%" height="100%">
                             <LineChart data={chartData}>
-                                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
+                                <CartesianGrid strokeDasharray="3 3" stroke="var(--card-border)" />
                                 <XAxis
                                     dataKey="time"
                                     type="number"
                                     domain={[startTimeMs, 'auto']}
                                     scale="time"
                                     tick={false}
-                                    stroke="#94a3b8"
-                                    label={{ value: 'Time', position: 'insideBottom', offset: -5, fill: '#94a3b8' }}
+                                    stroke="var(--text-secondary)"
+                                    label={{ value: 'Time', position: 'insideBottom', offset: -5, fill: 'var(--text-secondary)' }}
                                 />
                                 <YAxis
-                                    stroke="#94a3b8"
-                                    label={{ value: 'Rating', angle: -90, position: 'insideLeft', offset: 10, fill: '#94a3b8' }}
+                                    stroke="var(--text-secondary)"
+                                    label={{ value: 'Rating', angle: -90, position: 'insideLeft', offset: 10, fill: 'var(--text-secondary)' }}
                                 />
-                                <Tooltip labelFormatter={(time) => new Date(time).toLocaleDateString()} contentStyle={{ backgroundColor: '#1e293b', border: 'none', borderRadius: 8 }} />
+                                <Tooltip labelFormatter={(time) => new Date(time).toLocaleDateString()} contentStyle={{ backgroundColor: 'var(--surface-card)', border: 'none', borderRadius: 8 }} />
                                 <Legend wrapperStyle={{ paddingTop: 20 }} />
-                                <Line type="monotone" name={handle1} dataKey={handle1} stroke="#6366f1" strokeWidth={3} dot={false} connectNulls activeDot={{ r: 6 }} />
-                                <Line type="monotone" name={handle2} dataKey={handle2} stroke="#a855f7" strokeWidth={3} dot={false} connectNulls activeDot={{ r: 6 }} />
+                                <Line type="monotone" name={handle1} dataKey={handle1} stroke="var(--primary-color)" strokeWidth={3} dot={false} connectNulls activeDot={{ r: 6 }} />
+                                <Line type="monotone" name={handle2} dataKey={handle2} stroke="var(--secondary-color)" strokeWidth={3} dot={false} connectNulls activeDot={{ r: 6 }} />
                             </LineChart>
                         </ResponsiveContainer>
                     </Paper>
@@ -321,26 +321,26 @@ const Compare = () => {
                                 data={solvedByRatingData}
                                 margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
                             >
-                                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
+                                <CartesianGrid strokeDasharray="3 3" stroke="var(--card-border)" />
                                 <XAxis
                                     dataKey="rating"
                                     type="category"
-                                    stroke="#94a3b8"
+                                    stroke="var(--text-secondary)"
                                     tick={false}
-                                    label={{ value: 'Rating', position: 'insideBottom', offset: -5, fill: '#94a3b8' }}
+                                    label={{ value: 'Rating', position: 'insideBottom', offset: -5, fill: 'var(--text-secondary)' }}
                                 />
                                 <YAxis
                                     type="number"
-                                    stroke="#94a3b8"
-                                    label={{ value: 'Count', angle: -90, position: 'insideLeft', offset: 10, fill: '#94a3b8' }}
+                                    stroke="var(--text-secondary)"
+                                    label={{ value: 'Count', angle: -90, position: 'insideLeft', offset: 10, fill: 'var(--text-secondary)' }}
                                 />
                                 <Tooltip
-                                    contentStyle={{ backgroundColor: '#1e293b', border: 'none', borderRadius: 8 }}
-                                    cursor={{ fill: 'rgba(255,255,255,0.05)' }}
+                                    contentStyle={{ backgroundColor: 'var(--surface-card)', border: 'none', borderRadius: 8 }}
+                                    cursor={{ fill: 'var(--surface-hover)' }}
                                 />
                                 <Legend wrapperStyle={{ paddingTop: 20 }} />
-                                <Bar dataKey={handle1} name={handle1} fill="#6366f1" radius={[4, 4, 0, 0]} />
-                                <Bar dataKey={handle2} name={handle2} fill="#a855f7" radius={[4, 4, 0, 0]} />
+                                <Bar dataKey={handle1} name={handle1} fill="var(--primary-color)" radius={[4, 4, 0, 0]} />
+                                <Bar dataKey={handle2} name={handle2} fill="var(--secondary-color)" radius={[4, 4, 0, 0]} />
                             </BarChart>
                         </ResponsiveContainer>
                     </Paper>
