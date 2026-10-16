@@ -116,7 +116,7 @@ export default function Landing() {
             <Box className="landing-hero">
                 <Box className="hero-copy">
                     <Chip className="hero-kicker" label="FOR CODEFORCES PRACTICE" size="small" />
-                    <Typography component="h1" className="hero-title">Your CP progress.<br /><span>Made clearer.</span></Typography>
+                    <Typography component="h1" className="hero-title">Your practice,<br /><span>all in one place.</span></Typography>
                     <Typography className="hero-description">Keep your Codeforces stats, practice problems, saved questions, and contest comparisons together. Spend less time switching tabs and more time solving.</Typography>
                     <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1.5} className="hero-actions">
                         <Button component={Link} to="/register" variant="contained" size="large" endIcon={<ArrowForwardRounded />}>Create an account</Button>

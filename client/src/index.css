@@ -183,10 +183,10 @@ body {
 
 /* Public landing page */
 .landing-page { color: var(--text-primary); }
-.landing-hero { min-height: 590px; display: grid; grid-template-columns: 0.86fr 1.14fr; align-items: center; gap: clamp(28px, 5vw, 70px); padding: 58px 0 74px; }
+.landing-hero { min-height: 590px; display: grid; grid-template-columns: 1fr 1.1fr; align-items: center; gap: clamp(28px, 5vw, 70px); padding: 58px 0 74px; }
 .hero-copy { position: relative; z-index: 1; }
 .hero-kicker { background: transparent !important; color: var(--primary-color) !important; border: 0 !important; font-weight: 750 !important; letter-spacing: 0.1em; }
-.hero-title { margin-top: 18px !important; font-size: clamp(48px, 5.8vw, 74px) !important; line-height: 1.01 !important; letter-spacing: -0.065em !important; font-weight: 800 !important; color: var(--text-primary); }
+.hero-title { margin-top: 18px !important; font-size: clamp(44px, 5.2vw, 68px) !important; line-height: 1.01 !important; letter-spacing: -0.065em !important; font-weight: 800 !important; color: var(--text-primary); }
 .hero-title span { color: var(--primary-color); }
 .hero-description { max-width: 500px; margin-top: 23px !important; color: var(--text-secondary); font-size: 17px !important; line-height: 1.75 !important; }
 .hero-actions { margin-top: 30px; }
