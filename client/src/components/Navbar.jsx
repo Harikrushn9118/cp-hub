@@ -3,10 +3,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import {
     AppBar, Toolbar, Button, Typography, Box, IconButton,
-    Menu, MenuItem, useMediaQuery, useTheme,
+    Menu, MenuItem, Tooltip, useMediaQuery, useTheme,
 } from '@mui/material';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MenuRounded from '@mui/icons-material/MenuRounded';
+import LightModeRounded from '@mui/icons-material/LightModeRounded';
+import DarkModeRounded from '@mui/icons-material/DarkModeRounded';
+import { useColorMode } from '../context/ColorModeContext';
 
 const appLinks = [
     ['Dashboard', '/dashboard'], ['Compare', '/compare'], ['Problems', '/problems'],
@@ -15,6 +18,7 @@ const appLinks = [
 
 const Navbar = () => {
     const { user, logout } = useAuth();
+    const { mode, toggleColorMode } = useColorMode();
     const navigate = useNavigate();
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('md'));
@@ -36,6 +40,11 @@ const Navbar = () => {
                 {user ? (
                     <>
                         {!isMobile && <Box className="nav-links">{appLinks.map(([label, path]) => <Button key={path} color="inherit" component={Link} to={path}>{label}</Button>)}</Box>}
+                        <Tooltip title={`Switch to ${mode === 'dark' ? 'light' : 'dark'} mode`}>
+                            <IconButton color="inherit" aria-label={`Switch to ${mode === 'dark' ? 'light' : 'dark'} mode`} onClick={toggleColorMode}>
+                                {mode === 'dark' ? <LightModeRounded /> : <DarkModeRounded />}
+                            </IconButton>
+                        </Tooltip>
                         <IconButton color="inherit" aria-label="Open account menu" onClick={(event) => setAnchorEl(event.currentTarget)}>
                             {isMobile ? <MenuRounded /> : <AccountCircle />}
                         </IconButton>
@@ -51,6 +60,11 @@ const Navbar = () => {
                         {!isMobile && <Button color="inherit" href="/#features">Features</Button>}
                         <Button color="inherit" component={Link} to="/login">Log in</Button>
                         <Button component={Link} to="/register" variant="contained" size="small">Get started</Button>
+                        <Tooltip title={`Switch to ${mode === 'dark' ? 'light' : 'dark'} mode`}>
+                            <IconButton color="inherit" aria-label={`Switch to ${mode === 'dark' ? 'light' : 'dark'} mode`} onClick={toggleColorMode}>
+                                {mode === 'dark' ? <LightModeRounded /> : <DarkModeRounded />}
+                            </IconButton>
+                        </Tooltip>
                     </Box>
                 )}
             </Toolbar>
