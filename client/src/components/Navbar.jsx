@@ -16,6 +16,19 @@ const appLinks = [
     ['Contests', '/contests'], ['Bookmarks', '/bookmarks'],
 ];
 
+const ThemeToggle = ({ mode, onToggle }) => (
+    <Tooltip title={`Switch to ${mode === 'dark' ? 'light' : 'dark'} mode`}>
+        <IconButton
+            className="theme-toggle"
+            aria-label={`Switch to ${mode === 'dark' ? 'light' : 'dark'} mode`}
+            onClick={onToggle}
+            size="small"
+        >
+            {mode === 'dark' ? <LightModeRounded /> : <DarkModeRounded />}
+        </IconButton>
+    </Tooltip>
+);
+
 const Navbar = () => {
     const { user, logout } = useAuth();
     const { mode, toggleColorMode } = useColorMode();
@@ -40,11 +53,7 @@ const Navbar = () => {
                 {user ? (
                     <>
                         {!isMobile && <Box className="nav-links">{appLinks.map(([label, path]) => <Button key={path} color="inherit" component={Link} to={path}>{label}</Button>)}</Box>}
-                        <Tooltip title={`Switch to ${mode === 'dark' ? 'light' : 'dark'} mode`}>
-                            <IconButton color="inherit" aria-label={`Switch to ${mode === 'dark' ? 'light' : 'dark'} mode`} onClick={toggleColorMode}>
-                                {mode === 'dark' ? <LightModeRounded /> : <DarkModeRounded />}
-                            </IconButton>
-                        </Tooltip>
+                        <ThemeToggle mode={mode} onToggle={toggleColorMode} />
                         <IconButton color="inherit" aria-label="Open account menu" onClick={(event) => setAnchorEl(event.currentTarget)}>
                             {isMobile ? <MenuRounded /> : <AccountCircle />}
                         </IconButton>
@@ -60,11 +69,7 @@ const Navbar = () => {
                         {!isMobile && <Button color="inherit" href="/#features">Features</Button>}
                         <Button color="inherit" component={Link} to="/login">Log in</Button>
                         <Button component={Link} to="/register" variant="contained" size="small">Get started</Button>
-                        <Tooltip title={`Switch to ${mode === 'dark' ? 'light' : 'dark'} mode`}>
-                            <IconButton color="inherit" aria-label={`Switch to ${mode === 'dark' ? 'light' : 'dark'} mode`} onClick={toggleColorMode}>
-                                {mode === 'dark' ? <LightModeRounded /> : <DarkModeRounded />}
-                            </IconButton>
-                        </Tooltip>
+                        <ThemeToggle mode={mode} onToggle={toggleColorMode} />
                     </Box>
                 )}
             </Toolbar>
